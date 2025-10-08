@@ -1,3 +1,4 @@
+import { EditorWindow } from "./EditorWindow";
 import { EngineConfig } from "./EngineConfig";
 
 export class EngineUI {
@@ -5,6 +6,9 @@ export class EngineUI {
     constructor(engine) {
 
         this.engine = engine;
+        this.editorWindows = [];
+        this.editorWindows.push(new EditorWindow());
+
         this.linkElements();
 
         switch(this.engine.config.CurrentState) {

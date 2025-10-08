@@ -4,23 +4,32 @@ import { EngineUI } from "./EngineUI";
 
 export class EngineManager {
     
-    constructor() {
+    constructor(...gameObjects) {
 
         this.config = new EngineConfig();
         this.ui = new EngineUI(this);
+        this.gameObjects = [];
 
-        this.initialize();
+        this.initialize(gameObjects);
         setInterval(() => { this.onNewFrame(); }, this.config.Framerate); 
     }
 
-    initialize() {
+    initialize(gameObjects) {
 
-//        setTimeout(() => { this.changeState(EngineConfig.EngineState.Editing); }, 4000);
+        if(gameObjects === undefined)
+            return;
+
+        gameObjects.forEach(GO => { this.gameObjects.push(new GO(this)); });
     }
 
     onNewFrame() {
 
         this.applyState();
+        this.gameObjects.forEach(GO => {
+
+            GO.updateComponents();
+            GO.update();
+        });
     }
 
     applyState() {
@@ -62,8 +71,4 @@ export class EngineManager {
     }
 }
 
-new EngineManager([
-
-    //all pobjects that need to be preloaded
-    new EmptyGameObject()
-]);
+new EngineManager(EmptyGameObject);

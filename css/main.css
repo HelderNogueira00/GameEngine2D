@@ -5,11 +5,219 @@
     box-sizing: border-box;
 }
 
-#initElement, #playElement, #editorElement {
+body {
 
-    color: white;
+    font-family: 'Roboto';
+    color: #d4d4d4;
+    height: 100vh;
+    background-color: #151515;
+}
+
+#editorElement {
+
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    justify-content: flex-start;
+}
+
+/* START OPTIONS BAR */
+#editorElement .options-bar {
+
+    height: 35px;
+    padding-top: 5px;
+    padding-left: 5px;
+    width: 100vw;
+    margin-bottom: 10px;
+    background-color: #151515;
+}
+
+#editorElement .options-bar ul {
+
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#editorElement .options-bar ul li  {
+
+    padding: 4px;
+    margin-right: 12px;
+}
+
+#editorElement .options-bar ul li a {
+
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    text-decoration: none;
+    color: #d4d4d4;
+    transition: .2s ease-in;
+}
+
+#editorElement .options-bar ul li a:hover {
+
+    color: rgb(231, 193, 20);
+}
+/* END OPTIONS BAR */
+
+
+/* START ACTIONS BAR */
+#editorElement .actions-bar {
+
+    height: 35px;
+    padding-left: 5px;
+    width: 100vw;
+    margin-bottom: 10px;
+}
+
+
+#editorElement .actions-bar button {
+
+    padding: 8px;
+    border: 1px solid rgb(231, 193, 20);
+    color: #d5d5d5;
+    border-radius: 2px;
+    margin-right: 4px;
+
     background-color: #101010;
+}
+/* END OPTIONS BAR */
+
+#editorElement .containers {
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 1px;
+    height: calc(100vh - 90px);
+    position: relative;
+}
+
+#editorElement .window-container {
+
+    display: grid;
+    grid-template-columns: auto 1fr auto; /* Two columns by default */
+    grid-template-rows: 1fr; /* Two rows by default */
+    gap: 1px;
+    width: 100vw;
+    position: relative;
+}
+
+#editorElement .window-container-top {
+
+    min-height: 60vh;
+
+}
+
+#editorElement .window-container-bottom {
+
+    align-self: bottom;
+    transform-origin: bottom;
+
+    min-height: 15vh;
+    max-height: 30vh;
+}
+
+#editorElement .window {
+ 
+    position: relative;
+/*    display: flex;
+    flex-direction: column;
+  */  overflow: hidden;
+}
+
+#editorElement .window-resize-left,
+#editorElement .window-resize-right {
+
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    top: 0;
+    cursor: e-resize;
+    background-color: #000;
+}
+
+#editorElement .window-resize-left
+{
+    left: 0;
+}
+
+#editorElement .window-resize-right {
+
+    right: 0;
+}
+
+#editorElement .container-resize {
 
     width: 100vw;
-    height: 100vh;
+    height: 3px;
+    cursor: s-resize;
+    background-color: #000;
+        align-self: bottom;
+    transform-origin: bottom;
+}
+
+#editorElement .window-header {
+
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #151515;
+}
+
+#editorElement .window-header span {
+    
+    padding: 12px;
+    font-size: 0.9rem;
+    background-color: #202020;
+}
+
+#editorElement .window-body  {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #202020;
+
+    height: 100%;
+}
+
+#worldObjectsWindow {
+
+    width: 100%;
+    min-width: 10vw;
+    max-width: 15vw;
+}
+
+#propertiesWindow {
+
+    transform-origin: right center;
+    justify-self: right;
+    width: 100%;
+    min-width: 20vw;
+    max-width: 35vw;    
+}
+
+#projectWindow {
+
+    width: 100%;
+    min-width: 25vw;
+    max-width: 30vw;
+}
+
+#statsWindow {
+
+    transform-origin: right center;
+    justify-self: right;
+    width: 100%;
+    min-width: 20vw;
+    max-width: 25vw;
+}
+
+#workspaceWindow {
+
+    min-width: 30vw;
 }
