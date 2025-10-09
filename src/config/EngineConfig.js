@@ -7,7 +7,11 @@ export class EngineConfig {
         Playing: 2
     });
 
-    Framerate = 1;
+    PixelUnit = 41;
+    GameFramerate = 10000;
+    EditorFramerate = 100;
+    EngineFramerate = 1000;
+
     NextState = EngineConfig.EngineState.Initializing;
     CurrentState = EngineConfig.EngineState.Initializing;
 }

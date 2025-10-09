@@ -1,13 +1,14 @@
-import { EditorWindow } from "./EditorWindow";
-import { EngineConfig } from "./EngineConfig";
+import { EditorWindow } from "../base/EditorWindow";
+import { EditorWindowManager } from "./EditorWindowManager";
+import { EngineConfig } from "../config/EngineConfig";
+import { InputManager } from "./InputManager";
 
 export class EngineUI {
 
     constructor(engine) {
 
         this.engine = engine;
-        this.editorWindows = [];
-        this.editorWindows.push(new EditorWindow());
+        this.editorWindowManager = new EditorWindowManager(this.engine);
 
         this.linkElements();
 
@@ -28,9 +29,13 @@ export class EngineUI {
         this.playButton = document.getElementById("play");
         this.stopButton = document.getElementById("stop");
 
+        this.framerateInput = document.getElementById("framerate");
+
         this.setupEventListeners();
         this.engine.changeState(EngineConfig.EngineState.Editing);
     }
+
+    
 
     setupEventListeners() {
         
@@ -40,6 +45,11 @@ export class EngineUI {
 
         this.stopButton.addEventListener("click", () => {
             this.engine.changeState(EngineConfig.EngineState.Editing);
+        });
+
+        this.framerateInput.addEventListener('input', e => {
+
+            this.engine.changeFramerate(e.target.value);
         });
     }
 

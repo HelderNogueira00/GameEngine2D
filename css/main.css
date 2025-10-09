@@ -1,3 +1,13 @@
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 * {
 
     margin: 0;
@@ -100,7 +110,7 @@ body {
     display: grid;
     grid-template-columns: auto 1fr auto; /* Two columns by default */
     grid-template-rows: 1fr; /* Two rows by default */
-    gap: 1px;
+    gap: 2px;
     width: 100vw;
     position: relative;
 }
@@ -136,7 +146,7 @@ body {
     height: 100%;
     top: 0;
     cursor: e-resize;
-    background-color: #000;
+    background-color: transparent;
 }
 
 #editorElement .window-resize-left
@@ -154,7 +164,7 @@ body {
     width: 100vw;
     height: 3px;
     cursor: s-resize;
-    background-color: #000;
+    background-color: transparent;
         align-self: bottom;
     transform-origin: bottom;
 }
@@ -185,6 +195,20 @@ body {
     height: 100%;
 }
 
+.content {
+
+    margin: 0;
+    padding: 0;
+}
+
+#editorElement .window-body .content {
+
+    width: 100%;
+    height: 100%;
+    margin-left: 2px;
+    border: 2px solid #404040;
+}
+
 #worldObjectsWindow {
 
     width: 100%;
@@ -199,6 +223,64 @@ body {
     width: 100%;
     min-width: 20vw;
     max-width: 35vw;    
+}
+
+.objectProperties {
+
+    display: none;
+}
+
+.objectProperties .head {
+
+    display: none;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: space-between;
+
+        border-bottom: 2px solid #454545;
+    border-bottom-style: dashed;
+}
+
+.objectProperties .actions {
+
+    display: flex;
+    flex-direction: column;
+
+    justify-self: flex-end;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin: 0;
+}
+
+.objectProperties .actions p {
+
+    cursor: pointer;
+}
+
+#propertiesWindow .objectProperties h4{
+
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    padding-top: 4px;
+    padding-left: 6px;
+}
+
+#propertiesWindow .objectProperties p {
+
+    padding-top: 4px;
+    padding-left: 6px;
+    padding-bottom: 8px;
+    font-size: 0.85rem;
+}
+
+#propertiesWindow .component {
+
+    margin: 12px;
+    border-bottom: 2px solid #454545;
+    border-bottom-style: dashed;
 }
 
 #projectWindow {
@@ -220,4 +302,277 @@ body {
 #workspaceWindow {
 
     min-width: 30vw;
+}
+
+#worldObjectsWindow .window-content .window-body {
+
+    user-select: none;
+}
+
+#windowContextMenu {
+
+    position: absolute;
+    display: none;
+
+    border: 1px solid #303030;
+    list-style: none;
+    padding: 5px 0;
+    margin: 0;
+    width: 200px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    z-index: 1000;
+    background: #101010;
+}
+
+#windowContextMenu li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+#windowContextMenu li:hover {
+  background-color: #303030;
+}
+
+.context-menu-option {
+
+    font-size: 0.8rem;
+    padding: 12px;
+    padding-right: 45px;
+}
+
+#workspaceGrid {
+
+    display: grid;
+    gap: 1px;
+    background-color: #444;
+    width: fit-content;
+    transform-origin: center center;
+}
+
+#workspaceGrid .cell {
+
+    width: 40px;
+    height: 40px;
+    border-color: #303030;
+    background-color: #151515;
+    box-sizing: border-box;
+}
+
+#workspaceGrid .cell:hover {
+
+    background-color: #303030;
+}
+
+#consoleWindow .content p {
+
+    padding-left: 8px;
+    padding-bottom: 4px;
+    color: #d4d4d4;
+    font-size: 0.8rem;
+    width: 100%;
+    border-bottom: 1px solid #151515;
+}
+
+.console-log {
+
+    color: #d4d4d4fa;
+}
+
+.console-warning {
+
+    color: #f0bc14fa;
+}
+
+.console-error {
+
+    color: #f04e38fa;
+}
+
+.window .content {
+
+    height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#workspaceWindow .content {
+
+    height: 100px;
+    overflow-y: auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.content::-webkit-scrollbar {
+  width: 6px; /* width of the scrollbar */
+}
+
+.content::-webkit-scrollbar-track {
+  background: #303030; /* color of the track */
+}
+
+.content::-webkit-scrollbar-thumb {
+  background-color: #151515;    /* color of the scroll thumb */
+  border-radius: 6px;        /* roundness of the thumb */
+   /* creates padding inside thumb */
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background-color: #303030;    /* darker on hover */
+}
+
+.content {
+  scrollbar-width: thin; /* options: auto | thin | none */
+  scrollbar-color: #303030 #151515; /* thumb color | track color */
+}
+
+#worldObjectsWindow .content p {
+
+    padding: 4px;
+    padding-left: 8px;
+    font-size: 0.8rem;
+    color: #f5f5f5;
+}
+
+.content p:hover {
+
+    background-color: #151515;
+}
+
+#propertiesWindow .component .title {
+
+        display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#propertiesWindow .component .title h2 {
+
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+#propertiesWindow .component .row,
+#propertiesWindow .component .args {
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+#propertiesWindow .component .title h6 {
+
+    font-size: 0.8rem;
+    text-transform: capitalize;
+    font-weight: 400;
+}
+
+#propertiesWindow .component .args p {
+
+    font-size: 0.8rem;
+        margin-left: 5px;
+    text-transform: none;
+    border: none;
+}
+
+#propertiesWindow .component .args input {
+
+    height: 20px;
+    max-width: 60px;
+    padding: 4px;
+    border-radius: 2px;
+    font-size: 0.75rem;
+    color: white;
+    margin-left: 5px;
+    background-color: #151515;
+    border: 1px solid #404040;
+}
+
+#propertiesWindow .component {
+
+    display: none;
+}
+
+#gridObjects {
+
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+}
+
+#transformComponent {
+
+    display: none;
+}
+
+#transformArrow {
+
+    display: none;
+    width: 20px;
+    height: 20px;
+    position: relative;
+}
+
+#transformArrow img {
+
+    height: 100%;
+    width: 100%;
+    left: 20px;
+    position: absolute;
+
+    user-drag: none;      
+    -webkit-user-drag: none;
+    user-select: none;    
+    pointer-events: none; 
+}
+
+.component {
+
+    display: none;
+}
+
+select {
+
+    color: #f3f3f3;
+    border: 1px solid #303030;
+    background-color: #151515;
+
+    padding: 4px;
+}
+
+#framerate {
+
+    height: 35px;
+    color: white;
+    border: none;
+    padding-left: 15px;
+    background-color: #303030;
+}
+
+#addComponent {
+
+    display: block;
+    height: 80px;
+    border-color: #303030;
+    background-color: #151515;
+}
+
+#addComponent li {
+
+    color: white;
+    font-size: 0.8rem;
+
+    padding: 8px;
+    background-color: #303030;
+}
+
+#addComponent li:hover {
+
+    cursor: pointer;
+    background-color: #151515;
 }

@@ -1,0 +1,20 @@
+export class Types {
+
+    static Component = Object.freeze({
+
+        Undefined: 0,
+        Transform: 1,
+        Renderer: 2,
+        TextRenderer: 3
+    });
+
+    static Event = Object.freeze({
+
+        ObjectCreated: 1,
+        ObjectDestroyed: 2,
+        ObjectSelected: 3,
+        ObjectDeselected: 4,
+        MouseUP: 5,
+        OnNewFrame: 6  
+    });
+}
