@@ -15,3 +15,7 @@ and mechanisms. Feel free to comment any change, improvement or bug you may find
 suggest new ideas and help me turning this code better. Thanks :)
 
 ![Alt text](https://github.com/user-attachments/assets/f1af62f3-5d1c-4371-80db-cbbd2824bdfe)
+Server Backend Project Link: https://github.com/HelderNogueira00/GameEngine2D-Server 
+Youtube PLaylist: https://www.youtube.com/playlist?list=PLPz9k5lGde_zDLt1tI4Pv8u30yPi9LECT 
+LinkedIn: https://www.linkedin.com/in/helder-nogueira-073b8a37b 
+BuyMeACoffee: https://buymeacoffee.com/heldernogueira00 
