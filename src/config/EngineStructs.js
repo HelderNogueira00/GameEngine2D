@@ -15,6 +15,10 @@ export class Types {
         ObjectSelected: 3,
         ObjectDeselected: 4,
         MouseUP: 5,
-        OnNewFrame: 6  
+        OnNewFrame: 6,
+        OnCodeEditorOpen: 7,
+        OnCodeEditorClose: 8,
+        OnUserLoggedIn: 9,
+        OnUserLoggedOut: 10
     });
 }

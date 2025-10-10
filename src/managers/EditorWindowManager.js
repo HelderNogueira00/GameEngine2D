@@ -6,6 +6,7 @@ import { PropertiesEditorWindow } from "../windows/PropertiesEditorWindow";
 import { StatsEditorWindow } from "../windows/StatsEditorWindow";
 import { WorkspaceEditorWindow } from "../windows/WorkpsaceEditorWindow";
 import { WorldObjectEditorWindow } from "../windows/WorldObjectsEditorWindow";
+import { CodeEditorWindow } from "../windows/CodeEditorWindow";
 
 export class EditorWindowManager {
 
@@ -71,6 +72,7 @@ export class EditorWindowManager {
         this.windows.push(new OrganizerEditorWindow(this.engine));
         this.windows.push(new ConsoleEditorWindow(this.engine));
         this.windows.push(new StatsEditorWindow(this.engine));
+        this.windows.push(new CodeEditorWindow(this.engine));
     }
 
     linkGlobalListeners() {

@@ -162,4 +162,14 @@ export class WorkspaceEditorWindow extends EditorWindow {
         EditorManager.GetGameObjects().forEach(go => go.editorElement.style.border = "none");
         this.arrowElement.parent.style.display = "none";
     }
+
+    onCodeEditorOpened(event) {
+
+        this.element.style.display = "none";
+    }
+
+    onCodeEditorClosed(event) {
+
+        this.element.style.display = "block";
+    }
 }

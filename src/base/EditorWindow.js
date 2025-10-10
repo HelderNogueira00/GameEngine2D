@@ -44,6 +44,11 @@ export class EditorWindow {
             case EditorWindow.Type.Statistics:
                 this.element = document.querySelector("#statsWindow");
                 break;
+
+            case EditorWindow.Type.CodeEditor:
+                this.element = document.querySelector('#codeWindow');
+                break;
+
         }
 
         if(this.element === undefined)
@@ -61,6 +66,10 @@ export class EditorWindow {
                 case Types.Event.ObjectSelected: this.onObjectDeselected({data: -1}); this.onObjectSelected(event); break;
                 case Types.Event.ObjectDeselected: this.onObjectDeselected(event); break;
                 case Types.Event.MouseUP: this.onMouseUp(event); break;
+                case Types.Event.OnCodeEditorOpen: this.onCodeEditorOpened(event); break;
+                case Types.Event.OnCodeEditorClose: this.onCodeEditorClosed(event); break;
+                case Types.Event.OnUserLoggedIn: this.onUserLoggedIn(event); break;
+                case Types.Event.OnUserLoggedOut: this.onUserLoggedOut(event); break;
             }
         }
 
@@ -128,4 +137,8 @@ export class EditorWindow {
     onObjectDestroyed(event) {}
     onObjectSelected(event) {}
     onObjectDeselected(event) {}
+    onCodeEditorOpened(event) {}
+    onCodeEditorClosed(event) {}
+    onUserLoggedIn(event) {}
+    onUserLoggedOut(event) {}
 }

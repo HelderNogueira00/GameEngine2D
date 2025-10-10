@@ -15,7 +15,6 @@ export class WorldObjectEditorWindow extends EditorWindow {
         const contextMenuOptions = [
             { text: "New Empty GameObject", function: this.onNewGameObject },
             { text: "New 2DRenderer Object", function: this.onNew2DRenderer },
-            { text: "New Manager Object", function: this.onNewManager },
             { text: "New Text Renderer", function: this.onNewTextRenderer }
         ];
 
@@ -23,11 +22,6 @@ export class WorldObjectEditorWindow extends EditorWindow {
         this.gameObjects = [];
         this.ewm = EditorWindowManager.Instance;
         this.enableContextMenu(contextMenuOptions);
-    }
-
-    onNewManager = () => {
-
-       
     }
 
     onNewTextRenderer = () => {

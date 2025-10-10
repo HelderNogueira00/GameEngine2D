@@ -22,6 +22,8 @@
     <div class="actions-bar">
         <input type="number" max-length="4" placeholder="Framerate: 1000" id="framerate"/>
         <button id="play">PLAY</button>
+        <button id="codeOpen">Open Code Editor</button>
+        <button id="codeClose">Close Code Editor</button>
     </div>
 
 
@@ -53,6 +55,26 @@
                         <div class="grid" id="workspaceGrid">
                         </div>
                         <div id="gridObjects"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="window" id="codeWindow">
+            <div class="window-content">
+                <div class="window-header">
+                    <span>Javascript Code Editor</span>
+                </div>
+                <div class="window-body">
+                     <div class="content horizontal">
+                        <div class="top">
+                        </div>
+                        <div class="body">
+                            <textarea name="codeSection" id="codeSection">
+
+                            </textarea>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -257,7 +279,7 @@
                 </div>
                 <div class="window-body">
                      <div class="content">
-                        
+                        <p id="emptyText">No files or folders found!</p>
                     </div>
                 </div>
             </div>
