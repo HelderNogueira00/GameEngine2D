@@ -280,6 +280,10 @@
                 <div class="window-body">
                      <div class="content">
                         <p id="emptyText">No files or folders found!</p>
+                        <div id="backFolder" class="organizer-folder" style="display: none;"><img src="img/folder.png"><p>../</p></div>
+                        <div id="newFolder" class="organizer-folder" style="display: none;"><img src="img/folder.png">
+                            <input id="newFolderInput" type="text" max-length="12" value="New Folder"/>
+                        </div>
                     </div>
                 </div>
             </div>

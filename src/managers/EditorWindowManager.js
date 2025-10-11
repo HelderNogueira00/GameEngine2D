@@ -14,7 +14,7 @@ export class EditorWindowManager {
     constructor(engine) {
         
         EditorWindowManager.Instance = this;
-        
+
         this.engine = engine;
         this.windows = [];
         this.linkEditorWindows();

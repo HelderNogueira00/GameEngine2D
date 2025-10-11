@@ -18,6 +18,7 @@ export class EditorWindow {
 
         this.type = type;
         this.engine = engine;
+        this.contextMenuOpen = false;
 
         switch(this.type) {
 
@@ -76,24 +77,32 @@ export class EditorWindow {
     enableContextMenu(contextOptions) {
 
         this.contextMenuOptions = contextOptions;
-        this.contextMenuArea = this.element.querySelector('.window-body');
-        this.contextMenuElement = document.querySelector('#windowContextMenu');
-        this.contextMenuArea.addEventListener("contextmenu", e => this.onContextMenu(e));
+        this.contextMenuArea.addEventListener("contextmenu", e => this.onContextMenu(e, contextOptions));
     }
 
-    onContextMenu(e) {
+    addContextMenu(contextOptions, targetElement) {
 
+        targetElement.addEventListener("contextmenu", e => this.onContextMenu(e, contextOptions));
+    }
+
+    onContextMenu(e, contextMenuOptions) {
+
+        e.stopPropagation();
+        console.log(contextMenuOptions);
         if (e === undefined)
             return;
 
-        if(this.contextMenuOptions.length <= 0) {
+        if(contextMenuOptions === undefined)
+            contextMenuOptions = this.contextMenuOptions;
+
+        if(contextMenuOptions.length <= 0) {
 
             alert("this window does not have a context menu!");
             return;
         }
 
         this.contextMenuElement.innerHTML = "";
-        this.contextMenuOptions.forEach(option => {
+        contextMenuOptions.forEach(option => {
 
             const optionElement = document.createElement('li');
             optionElement.classList.add('context-menu-option');
@@ -122,6 +131,8 @@ export class EditorWindow {
     linkElements() {
 
         this.contextMenu = [];
+        this.contextMenuArea = this.element.querySelector('.window-body');
+        this.contextMenuElement = document.querySelector('#windowContextMenu');
         this.contentElement = this.element.querySelector('.content');
     }
 

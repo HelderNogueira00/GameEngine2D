@@ -8,8 +8,11 @@ export class EditorManager {
 
         EditorManager.Instance = this;
         this.engine = engine;
+        this.treeStructure = { raw: "" };
     }
 
+    static GetTreeStructure() { return EditorManager.Instance.treeStructure; }
+    static UpdateTreeStructure(tree) { EditorManager.Instance.treeStructure.raw = tree; }
     static GetConfig() { return EditorManager.Instance.engine.config; }
     static GetPixelPerUnit() { return EditorManager.Instance.engine.config.PixelUnit; }
     static GetGameObjects() { return EditorManager.Instance.engine.objects; }

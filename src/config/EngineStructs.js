@@ -21,4 +21,12 @@ export class Types {
         OnUserLoggedIn: 9,
         OnUserLoggedOut: 10
     });
+
+    static OrganizerItemType = Object.freeze({
+
+        Directory: 0,
+        File: 1,
+        Script: 2,
+        Image: 3
+    });
 }

@@ -6,6 +6,7 @@ import { Types } from "../config/EngineStructs";
 import { EngineUI } from "./EngineUI";
 import { GameObject } from "../base/GameObject";
 import { InputManager } from "./InputManager";
+import { BackendManager } from "./BackendManager";
 
 export class EngineManager {
     
@@ -14,6 +15,7 @@ export class EngineManager {
 
         this.input = new InputManager();
         this.config = new EngineConfig();
+        this.backend = new BackendManager(this);
         this.ui = new EngineUI(this);
         this.editor = new EditorManager(this);
         this.objects = [];
@@ -117,6 +119,7 @@ export class EngineManager {
                 break;
 
             case EngineConfig.EngineState.Editing: 
+                
                 break;
 
             case EngineConfig.EngineState.Playing: 
