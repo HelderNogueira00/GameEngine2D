@@ -7,6 +7,7 @@ import { EngineUI } from "./EngineUI";
 import { GameObject } from "../base/GameObject";
 import { InputManager } from "./InputManager";
 import { BackendManager } from "./BackendManager";
+import { BackendEvents } from "../config/BackendEvents";
 
 export class EngineManager {
     
@@ -15,8 +16,8 @@ export class EngineManager {
 
         this.input = new InputManager();
         this.config = new EngineConfig();
-        this.backend = new BackendManager(this);
         this.ui = new EngineUI(this);
+        this.backend = new BackendManager(this);
         this.editor = new EditorManager(this);
         this.objects = [];
         this.initialize(objects);
@@ -25,6 +26,15 @@ export class EngineManager {
 
         EngineManager.Instance = this;
         this.intervalID = setInterval(() => { this.onNewFrame(); }, this.config.EngineFramerate);
+    }
+
+    receiveEvent(event) {
+
+        switch(event.type) {
+            
+            case BackendManager.Events.OnLoginSuccess: this.ui.onLoginSuccess(); break;
+            case BackendManager.Events.OnLoginFailure: this.ui.onLoginFailure(); break;
+        }
     }
 
     changeFramerate(framerate) {

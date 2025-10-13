@@ -672,3 +672,79 @@ select {
     text-align: center;
 }
 
+#initElement .login {
+
+}
+
+#projectsList {
+
+    display: none;
+    flex-direction: column;
+
+    align-items: flex-start;
+    justify-content: center;
+}
+
+#projectsList .projectList-item {
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    max-height: 70px;
+
+    padding: 15px;
+    margin: 12px;
+}
+
+#projectsList .projectList-item:hover {
+
+    cursor: pointer;
+    background-color: #303030;
+}
+
+#projectsList .projectList-item .right {
+
+    max-width: 60px;
+    margin-left: 15px;
+}
+
+#projectsList .projectList-item .right {
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: flex-end;
+}
+
+#projectsList .projectList-item .right img {
+
+    max-width: 20px;
+    max-height: 20px;
+
+}
+
+#projectsList .projectList-item .right .btn {
+
+        margin-left: 10px;
+    max-width: 20px;
+    max-height: 20px;
+}
+
+#createNewProject {
+
+    display: none;
+}
+
+#createNewProject form {
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+}

@@ -3,21 +3,37 @@ import { Types } from "../config/EngineStructs";
 import { ConsoleManager } from "./ConsoleManager";
 import { EditorManager } from "./EditorManager";
 import { EditorWindowManager } from "./EditorWindowManager";
+import { LoginManager } from "./LoginManager";
+import { ProjectsManager } from "./ProjectsManager";
 
 export class BackendManager {
 
+    static Events = Object.freeze({
+
+        OnLoginSuccess: 100,
+        OnLoginFailure: 101
+    });
     static Instance = null;
+
     constructor(engine) {
 
         BackendManager.Instance = this;
 
         this.engine = engine;
+        this.loginManager = new LoginManager(this);
+        this.projectsManager = new ProjectsManager();
         this.token = localStorage.getItem('token');
+    }
+
+    async verifyToken() {
+
+        const url = "http://engine.local";
+        BackendManager.Instance.postAuthenticatedRequest();
     }
 
     async postAuthenticatedRequest(body, url) {
 
-        let result = { ok: false, data: "" };
+        let result = { ok: false, data: "", status: "" };
         const token = localStorage.getItem('token');
         if(!token)
             return result;
@@ -36,13 +52,10 @@ export class BackendManager {
         try {
 
             const res = await fetch(url, headers);
-            if(res.ok) {
-
-                const data = await res.json();
-                result.ok = true;
-                result.data = data.data;
-            }
-            else ConsoleManager.Error("Error Updating folders");
+            const data = await res.json();
+            result.ok = true;
+            result.data = data;
+            result.status = res.status;
         }
         catch(err) { ConsoleManager.Error('API Error: ' + err)}
         console.log(result);
@@ -52,7 +65,7 @@ export class BackendManager {
 
     async postRequest(body, url) {
 
-        let result = { ok: false, data: "" };
+        let result = { ok: false, data: "", status: "" };
         const headers = { 
        
             method: 'POST',
@@ -65,22 +78,19 @@ export class BackendManager {
         try {
 
             const res = await fetch(url, headers);
-            if(res.ok) {
-
-                const data = await res.json();
-                result.ok = true;
-                result.data = data;
-            }
-            else ConsoleManager.Error("Error Updating folders");
+            const data = await res.json();
+            result.ok = true;
+            result.data = data;
+            result.status = res.status;
         }
         catch(err) { ConsoleManager.Error('API Error: ' + err)}
         return result;
 
     }
 
-    async getRequest(url) {
+    async getAuthenticatedRequest(url) {
 
-        let result = { ok: false, data: "" };
+        let result = { ok: false, data: "", status: "" };
         const token = localStorage.getItem('token');
         if(!token)
             return result;
@@ -97,13 +107,35 @@ export class BackendManager {
         try {
 
             const res = await fetch(url, headers);
-            if(res.ok) {
+            const data = await res.json();
+            result.ok = true;
+            result.data = data;
+            result.status = res.status;
 
-                const data = await res.json();
-                result.ok = true;
-                result.data = data.data;
+        }
+        catch(err) { ConsoleManager.Error('API Error: ' + err)}
+        return result;
+    }
+
+    async getRequest(url) {
+
+        let result = { ok: false, data: "", status: "" };
+        const headers = { 
+       
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
             }
-            else ConsoleManager.Error("Error Updating folders");
+        };
+
+        try {
+
+            const res = await fetch(url, headers);
+            const data = await res.json();
+            result.ok = true;
+            result.data = data;
+            result.status = res.status;
+
         }
         catch(err) { ConsoleManager.Error('API Error: ' + err)}
         return result;

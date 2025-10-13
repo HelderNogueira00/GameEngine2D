@@ -41,6 +41,7 @@ export class EditorWindowManager {
     sendEvent(event) {
 
         this.windows.forEach(w => w.receiveEvent(event));
+        this.engine.receiveEvent(event);
     }
 
     refreshEditorWindows() {

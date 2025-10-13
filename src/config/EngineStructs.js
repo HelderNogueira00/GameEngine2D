@@ -29,4 +29,15 @@ export class Types {
         Script: 2,
         Image: 3
     });
+
+    static URI = Object.freeze({
+
+        LOGIN: 'http://engine.local:3000/auth/login',
+        TOKEN: 'http://engine.local:3000/auth/token',
+        FSAPI: 'http://engine.local:3000/fsapi',
+        FetchProjects: 'http://engine.local:3000/projects/fetch',
+        DeleteProject: 'http://engine.local:3000/projects/delete',
+        CreateProject: 'http://engine.local:3000/projects/create'
+    });
 }
+
