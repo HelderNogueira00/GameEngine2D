@@ -32,12 +32,14 @@ export class Types {
 
     static URI = Object.freeze({
 
+        LOGOUT: 'http://engine.local:3000/auth/logout',
         LOGIN: 'http://engine.local:3000/auth/login',
         TOKEN: 'http://engine.local:3000/auth/token',
         FSAPI: 'http://engine.local:3000/fsapi',
         FetchProjects: 'http://engine.local:3000/projects/fetch',
         DeleteProject: 'http://engine.local:3000/projects/delete',
-        CreateProject: 'http://engine.local:3000/projects/create'
+        CreateProject: 'http://engine.local:3000/projects/create',
+        LoadProject: 'http://engine.local:3000/projects/load'
     });
 }
 

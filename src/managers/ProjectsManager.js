@@ -1,5 +1,7 @@
 import { Types } from "../config/EngineStructs";
+import { EventListener } from "../config/EventListener";
 import { BackendManager } from "./BackendManager";
+import { EventsManager } from "./EventsManager";
 
 export class ProjectsManager {
 
@@ -17,33 +19,43 @@ export class ProjectsManager {
         if(result.ok && result.status === 200 && result.data !== undefined) {
 
             this.parseProjects(result.data.data.split(';'));
-            return this.projects;
+            EventsManager.Instance.broadcast({ type: EventsManager.Type.OnProjectsFetched, data: this.projects });   
         }
-        
-        return result.data;
     }
 
-    async deleteProject(e, projectID) {
+    async deleteProject(projectID) {
 
-        e.preventDefault();
         const body = { projectID: projectID };
-        const res = await BackendManager.Instance.postAuthenticatedRequest(body, Types.URI.DeleteProject);
-
-        if(res.ok && res.status === 200 && result.data !== undefined)
-            console.log("ok");
-
-        console.log("something wen wrong: deleting project");
+        await BackendManager.Instance.postAuthenticatedRequest(body, Types.URI.DeleteProject);
+        EventsManager.Instance.broadcast({ type: EventsManager.Type.OnProjectDeleted });
     }
 
     async createProject(projectName, projectDesc) {
 
         const body = { projectName: projectName, projectDescription: projectDesc };
-        const res = await BackendManager.Instance.postAuthenticatedRequest(body, Types.URI.CreateProject);
+        await BackendManager.Instance.postAuthenticatedRequest(body, Types.URI.CreateProject);
+        EventsManager.Instance.broadcast({ type: EventsManager.Type.onProjectCreated });
+    }
 
-        if(res.ok && res.status === 200 && res.data !== undefined)
-            console.log("ok");
+    async renameProject(projectID, projectName) {
 
-        console.log("something wen wrong: creating project");
+    }
+
+    async loadProject(projectID) {
+
+
+        const body = { projectID: projectID };
+        const res = await BackendManager.Instance.postAuthenticatedRequest(body, Types.URI.LoadProject);
+
+        if(res.ok && res.status === 200 && res.data !== undefined && res.data !== null) {
+
+            const projectID = res.data.id;
+            EventsManager.Instance.broadcast({type: EventsManager.Type.OnProjectLoaded, data: projectID });
+            //orgabizer api
+            return;
+        }
+
+        console.log("Error Loading Project!");
     }
 
     parseProjects(arr) {

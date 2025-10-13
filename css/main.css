@@ -676,7 +676,7 @@ select {
 
 }
 
-#projectsList {
+#projectsListContainer {
 
     display: none;
     flex-direction: column;
@@ -685,7 +685,7 @@ select {
     justify-content: center;
 }
 
-#projectsList .projectList-item {
+#projectsListContainer .projectList-item {
 
     display: flex;
     flex-direction: row;
@@ -699,19 +699,24 @@ select {
     margin: 12px;
 }
 
-#projectsList .projectList-item:hover {
+#projectsListContainer .projectList-item:hover {
 
     cursor: pointer;
     background-color: #303030;
 }
 
-#projectsList .projectList-item .right {
+#projectsListContainer .projectList-item .left {
+
+    width: 100%;
+}
+
+#projectsListContainer .projectList-item .right {
 
     max-width: 60px;
     margin-left: 15px;
 }
 
-#projectsList .projectList-item .right {
+#projectsListContainer .projectList-item .right {
 
     display: flex;
     flex-direction: row;
@@ -720,14 +725,14 @@ select {
     justify-content: flex-end;
 }
 
-#projectsList .projectList-item .right img {
+#projectsListContainer .projectList-item .right img {
 
     max-width: 20px;
     max-height: 20px;
 
 }
 
-#projectsList .projectList-item .right .btn {
+#projectsListContainer .projectList-item .right .btn {
 
         margin-left: 10px;
     max-width: 20px;

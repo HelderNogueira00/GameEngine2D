@@ -11,7 +11,8 @@ export class BackendManager {
     static Events = Object.freeze({
 
         OnLoginSuccess: 100,
-        OnLoginFailure: 101
+        OnLoginFailure: 101,
+        OnProjectsFetch: 102
     });
     static Instance = null;
 
@@ -20,9 +21,15 @@ export class BackendManager {
         BackendManager.Instance = this;
 
         this.engine = engine;
+        this.listeners = [];
         this.loginManager = new LoginManager(this);
         this.projectsManager = new ProjectsManager();
         this.token = localStorage.getItem('token');
+    }
+
+    implementListener(listener) {
+
+        this.listeners.push(listener);
     }
 
     async verifyToken() {

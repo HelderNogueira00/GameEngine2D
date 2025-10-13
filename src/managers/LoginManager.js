@@ -2,6 +2,7 @@ import { BackendEvents } from "../config/BackendEvents";
 import { Types } from "../config/EngineStructs";
 import { BackendManager } from "./BackendManager";
 import { EditorWindowManager } from "./EditorWindowManager";
+import { EventsManager } from "./EventsManager";
 
 export class LoginManager {
 
@@ -20,6 +21,16 @@ export class LoginManager {
     isConnected() { 
 
         return this.loginOK;
+    }
+
+    async logout() {
+
+        const res = await BackendManager.Instance.getAuthenticatedRequest(Types.URI.LOGOUT);
+        if(res.status === 200 && res.data !== undefined && res.data !== null) {
+
+            localStorage.removeItem('token');
+            EventsManager.Instance.broadcast({ type: EventsManager.Type.OnUserLoggedOut });
+        }
     }
 
     async onLogin(username, password) {
@@ -62,13 +73,13 @@ export class LoginManager {
 
         this.loginOK = true;
         localStorage.setItem('token', token);
-        EditorWindowManager.Instance.sendEvent({ type: BackendManager.Events.OnLoginSuccess, data: token });
+        EventsManager.Instance.broadcast({ type: EventsManager.Type.OnLoginGranted, data: token });
     }
 
     onLoginDenied() {
 
         this.loginOK = false;
         localStorage.removeItem('token');
-        EditorWindowManager.Instance.sendEvent({ type: BackendManager.Events.OnLoginFailure, data: "" });
+        EventsManager.Instance.broadcast({ type: EventsManager.Type.OnLoginDenied, data: ""});
     }
 }
