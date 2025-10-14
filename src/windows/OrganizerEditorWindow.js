@@ -86,14 +86,32 @@ export class OrganizerEditorWindow extends EditorWindow {
 
     onRefresh() {
 
+
+    }
+
+    onTreeUpdated(event) {
+
+        this.clear();
         this.buildTree();
         this.buildTreeElements();
         this.displayTreeLayers();
     }
 
+    clear() {
+
+        this.tree.dirs.forEach(dir => {
+
+            if(dir.element)
+                dir.element.remove();
+        });
+
+        this.tree.dirs = [];
+    }
+
     buildTree() {
 
         const treeData = EditorManager.GetTreeStructure().raw.split('|');
+    
         for(const entry of treeData) {
 
             if(entry === "")
@@ -187,66 +205,32 @@ export class OrganizerEditorWindow extends EditorWindow {
     }
 
 
-
-    async createScript(name) {
-
-        const payload = {
-            
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: `${name}`
-            })
-        };
-
-        const res = await fetch('http://engine.local:3000/newScript', payload);
-        if(res.ok)
-            console.log("script created on server");
-    }
-
-    //On Login OK, Fetch Project File Structure
-    async onUserLoggedIn(event) {
-
-        const url = 'http://engine.local:3000/fsapi';
-        const res = await BackendManager.Instance.getRequest(url);
-        
-        if(res.ok) {
-            
-            console.log(res);
-            this.emptyElement.style.display = (res.data === '') ? "block" : "none";
-            EditorManager.UpdateTreeStructure(res.data);
-        }
-    }
-
     //Create A New Folder On Server And Update Tree
     async createDir(name) {
 
-        const url = "http://engine.local:3000/fsapi/dir";
-        const body = {
-
-            name: name,
-            action: "create"
-        };
-
-        const res = await BackendManager.Instance.postAuthenticatedRequest(body, url);
-        if(res.ok)
-            EditorManager.UpdateTreeStructure(res.data);
+        const body = { projectID: EditorManager.Instance.projectID, name: name };
+        const res = await BackendManager.Instance.postAuthenticatedRequest(body, Types.URI.FSCreateDir);
+        
+        if(BackendManager.Instance.isOK(res))
+            EditorManager.UpdateTreeStructure(res.data.data);
     }   
+
+    async renameDir(oldName, newName) {
+
+        const body = { projectID: EditorManager.Instance.projectID, name: oldName, newName: newName };
+        const res = await BackendManager.Instance.postAuthenticatedRequest(body, Types.URI.FSRenameDir);
+
+        if(BackendManager.Instance.isOK(res))
+            EditorManager.UpdateTreeStructure(res.data.data);
+    }
 
     //Delete File or Folder On Server And Update Tree
     async onItemDelete(name) {
 
-        const url = "http://engine.local:3000/fsapi/dir";
-        const body = {
+        const body = { projectID: EditorManager.Instance.projectID, name: name };
+        const res = await BackendManager.Instance.postAuthenticatedRequest(body, Types.URI.FSDelete);
 
-            name: name,
-            action: "delete"
-        };
-
-        const res = await BackendManager.Instance.postAuthenticatedRequest(body, url);
-        if(res.ok)
-            EditorManager.UpdateTreeStructure(res.data);
+        if(BackendManager.Instance.isOK(res))
+            EditorManager.UpdateTreeStructure(res.data.data);
     }
 }

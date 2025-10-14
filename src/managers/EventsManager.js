@@ -11,7 +11,8 @@ export class EventsManager {
         OnProjectRenamed: 204,
         onProjectCreated: 205,
         OnUserLoggedOut: 206,
-        OnProjectLoaded: 207
+        OnProjectLoaded: 207,
+        OnFSRefresh: 208
     });
     static Instance = null;
     
@@ -59,6 +60,11 @@ export class EventsManager {
             case EventsManager.Type.OnProjectLoaded: 
                 
                 this.listeners.forEach(l => l.onProjectLoaded(event)); 
+                break;
+
+            case EventsManager.Type.OnFSRefresh:
+
+                this.listeners.forEach(l => l.onFSRefresh(event));
                 break;
         }
     }

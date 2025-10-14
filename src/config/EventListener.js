@@ -5,8 +5,7 @@ export class EventListener {
 
     constructor() {
         
-        this.manager = EventsManager.Instance;
-        this.manager.addListener(this);
+        EventsManager.Instance.addListener(this);
     }
 
     onLoginDenied() {}
@@ -14,9 +13,11 @@ export class EventListener {
     onProjectsFetched() {}
     onProjectRenamed() {}
     onProjectDeleted() {}
+    onProjectLoaded() {}
+    onUserLoggedOut() {}
 
     broadcast(event) {
 
-        this.manager.broadcast(event);
+        EventsManager.Instance.broadcast(event);
     }
 }

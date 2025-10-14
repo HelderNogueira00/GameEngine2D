@@ -1,11 +1,11 @@
 import { EditorWindow } from "../base/EditorWindow";
 
-export class ConsoleEditorWindow extends EditorWindow {
+
+export class ConsoleEditorWindow extends EditorWindow{
 
     constructor(){
 
         super(EditorWindow.Type.Console);
-
         this.logsListElement = this.element.querySelector('.content');
     }
 

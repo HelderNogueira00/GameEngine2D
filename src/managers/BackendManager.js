@@ -65,7 +65,6 @@ export class BackendManager {
             result.status = res.status;
         }
         catch(err) { ConsoleManager.Error('API Error: ' + err)}
-        console.log(result);
         return result;
     }
 
@@ -146,5 +145,10 @@ export class BackendManager {
         }
         catch(err) { ConsoleManager.Error('API Error: ' + err)}
         return result;
+    }
+
+    isOK(res) {
+
+        return res.ok && res.status === 200 && res.data !== undefined && res.data !== null;
     }
 }

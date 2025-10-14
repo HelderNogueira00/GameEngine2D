@@ -7,13 +7,15 @@ import { StatsEditorWindow } from "../windows/StatsEditorWindow";
 import { WorkspaceEditorWindow } from "../windows/WorkpsaceEditorWindow";
 import { WorldObjectEditorWindow } from "../windows/WorldObjectsEditorWindow";
 import { CodeEditorWindow } from "../windows/CodeEditorWindow";
+import { EventListener } from "../config/EventListener";
 
-export class EditorWindowManager {
+export class EditorWindowManager  {
 
     static Instance;
     constructor(engine) {
         
         EditorWindowManager.Instance = this;
+
 
         this.engine = engine;
         this.windows = [];

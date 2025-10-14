@@ -56,7 +56,7 @@ export class LoginManager {
         
         const res = await BackendManager.Instance.getAuthenticatedRequest(Types.URI.TOKEN);
         const valid = res.data.valid;
-        console.log(res);
+
         if(res.status === 200 && valid !== undefined && valid !== null) {
 
             if(valid === 0) {

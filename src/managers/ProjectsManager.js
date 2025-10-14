@@ -51,7 +51,6 @@ export class ProjectsManager {
 
             const projectID = res.data.id;
             EventsManager.Instance.broadcast({type: EventsManager.Type.OnProjectLoaded, data: projectID });
-            //orgabizer api
             return;
         }
 

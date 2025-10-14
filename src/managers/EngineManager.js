@@ -9,7 +9,6 @@ import { InputManager } from "./InputManager";
 import { BackendManager } from "./BackendManager";
 import { BackendEvents } from "../config/BackendEvents";
 import { EventsManager } from "./EventsManager";
-import { EventListener } from "../config/EventListener";
 
 export class EngineManager {
     
@@ -95,21 +94,14 @@ export class EngineManager {
 
             case EngineConfig.EngineState.Initializing: 
 
-                this.ui.focus(this.ui.initElement);
                 break;
 
             case EngineConfig.EngineState.Editing: 
 
-                this.isEditorRunning = true;
-                this.isGameRunning = false;
-                this.ui.focus(this.ui.editorElement);
                 break;
 
             case EngineConfig.EngineState.Playing: 
-            
-                this.isEditorRunning = false;
-                this.isGameRunning = true;
-                this.ui.focus(this.ui.playElement);
+           
                 break;
         }
     }
@@ -120,13 +112,22 @@ export class EngineManager {
         switch(this.config.NextState) {
 
             case EngineConfig.EngineState.Initializing: 
+
+                this.ui.focus(this.ui.initElement);
                 break;
 
             case EngineConfig.EngineState.Editing: 
                 
+                this.isEditorRunning = true;
+                this.isGameRunning = false;
+                this.ui.focus(this.ui.editorElement);
                 break;
 
             case EngineConfig.EngineState.Playing: 
+
+                this.isEditorRunning = false;
+                this.isGameRunning = true;
+                this.ui.focus(this.ui.playElement);
                 break;
         }
     }
