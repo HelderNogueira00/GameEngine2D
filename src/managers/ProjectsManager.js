@@ -50,7 +50,7 @@ export class ProjectsManager {
         if(res.ok && res.status === 200 && res.data !== undefined && res.data !== null) {
 
             const projectID = res.data.id;
-            EventsManager.Instance.broadcast({type: EventsManager.Type.OnProjectLoaded, data: projectID });
+            EventsManager.Instance.broadcast({type: EventsManager.Type.OnProjectLoaded, data: { id: projectID, name: res.data.name }});
             return;
         }
 

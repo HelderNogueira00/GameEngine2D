@@ -38,6 +38,35 @@ export class BackendManager {
         BackendManager.Instance.postAuthenticatedRequest();
     }
 
+    async postUpload(body, url) {
+
+         let result = { ok: false, data: "", status: "" };
+        const token = localStorage.getItem('token');
+        if(!token)
+            return result;
+
+        const headers = { 
+       
+            method: 'POST',
+            headers: {
+                
+                'Authorization': `Bearer ${token}`
+            },
+            body: body
+        };
+
+        try {
+
+            const res = await fetch(url, headers);
+            const data = await res.json();
+            result.ok = true;
+            result.data = data;
+            result.status = res.status;
+        }
+        catch(err) { ConsoleManager.Error('API Error: ' + err)}
+        return result;
+    }
+
     async postAuthenticatedRequest(body, url) {
 
         let result = { ok: false, data: "", status: "" };
@@ -115,6 +144,35 @@ export class BackendManager {
             const res = await fetch(url, headers);
             const data = await res.json();
             result.ok = true;
+            result.data = data;
+            result.status = res.status;
+
+        }
+        catch(err) { ConsoleManager.Error('API Error: ' + err)}
+        return result;
+    }
+
+    async getAuthenticatedFile(url) {
+
+        let result = { ok: false, data: "", status: "" };
+        const token = localStorage.getItem('token');
+        if(!token)
+            return result;
+        
+        const headers = { 
+       
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+
+        try {
+
+            const res = await fetch(url, headers);
+            const blob = await res.blob();
+            result.ok = true;
+            result.blob = blob;
             result.data = data;
             result.status = res.status;
 

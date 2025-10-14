@@ -35,7 +35,8 @@ export class EditorManager extends EventListener {
 
     async onProjectLoaded(event) {
 
-        this.projectID = event.data;
+        this.projectID = event.data.id;
+        this.projectName = event.data.name;
         const body = { projectID: this.projectID };
         const res = await BackendManager.Instance.postAuthenticatedRequest(body, Types.URI.FSRefresh);
 

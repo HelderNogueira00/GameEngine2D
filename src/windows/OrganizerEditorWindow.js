@@ -24,7 +24,7 @@ export class OrganizerEditorWindow extends EditorWindow {
        
 
         this.mainContextMenuOptions = [
-            { text: "Import New Asset", function: this.onNewAsset },
+            { text: "Upload Asset", function: this.onUploadAsset },
             { text: "New Javascript", function: this.onNewScript },
             { text: "New Folder", function: this.onNewFolder }
         ];
@@ -40,6 +40,7 @@ export class OrganizerEditorWindow extends EditorWindow {
             if(barsLength === 2) {
 
                 this.treeLayer = '';
+                this.onTreeUpdated(null);
                 return;
             }
 
@@ -47,6 +48,7 @@ export class OrganizerEditorWindow extends EditorWindow {
             const index = this.treeLayer.indexOf(current);
             const previousPath = this.treeLayer.substring(0, index);
             this.treeLayer = previousPath;
+            this.onTreeUpdated(null);
             console.log(this.treeLayer);
         });
 
@@ -73,9 +75,23 @@ export class OrganizerEditorWindow extends EditorWindow {
         document.querySelector('#newFolder').style.display = "block";
     }
 
-    onNewAsset = () => {
+    onUploadAsset = () => {
 
-        console.log("import new asset:!");
+        const uploadElement = document.createElement('input');
+        uploadElement.type = "file";
+        uploadElement.style.display = "none";
+        this.contentElement.appendChild(uploadElement);
+        uploadElement.click();
+        uploadElement.addEventListener('change', e => {
+
+            const file = uploadElement.files[0];
+            const form = new FormData();
+            form.append('myFile', file);
+
+            //filter exts
+            this.onUploadFile(this.treeLayer, form);
+            uploadElement.remove();
+        });
     }
 
     onNewScript = () => {
@@ -91,10 +107,13 @@ export class OrganizerEditorWindow extends EditorWindow {
 
     onTreeUpdated(event) {
 
+        this.previewFiles();
+
         this.clear();
         this.buildTree();
         this.buildTreeElements();
         this.displayTreeLayers();
+
     }
 
     clear() {
@@ -144,6 +163,16 @@ export class OrganizerEditorWindow extends EditorWindow {
         }
     }
 
+    async getImage(basePath) {
+
+        const name = EditorManager.Instance.projectName.replaceAll("\\", "_");
+        const path = basePath.replaceAll("\\", "_");
+        const url = Types.URI.FSGetFile + "/" + name + "/" + path;
+        const res = await BackendManager.Instance.getAuthenticatedFile(url); 
+        const imageURL = URL.createObjectURL(res.blob);
+        return imageURL;
+    }
+
     buildTreeElements() {
 
         this.tree.dirs.forEach(dir => {
@@ -151,13 +180,6 @@ export class OrganizerEditorWindow extends EditorWindow {
             if(dir.element === null || dir.element === undefined) {
 
                 const name = dir.path.split('\\').pop();
-                const folderElement = document.createElement('div');
-                const textElement = document.createElement('p');
-                const imageElement = document.createElement('img');
-                folderElement.classList.add('organizer-folder');
-                folderElement.appendChild(imageElement);
-                folderElement.appendChild(textElement);
-                textElement.textContent = name;
                 let imagePath = "";
                 switch(dir.ext) {
 
@@ -166,16 +188,46 @@ export class OrganizerEditorWindow extends EditorWindow {
                     case Types.OrganizerItemType.Image: imagePath = "img/image.png"; break;
                     case Types.OrganizerItemType.Script: imagePath = "img/script.png"; break;
                 }
-                imageElement.src = imagePath;
+
+                const folderElement = document.createElement('div');
+                folderElement.classList.add('organizer-folder');
+                folderElement.innerHTML = 
+                    "<div class=\"organizer-folder\">" +
+                            "<img src=\"" + imagePath + "\">" +
+                            "<p>" + name + "</p>" +
+                            "<input type=\"text\" value=\"name\" style=\"display: none\"/>" +
+                    "</div>";
+
+                const textElement = folderElement.getElementsByTagName('p')[0];
+                const imageElement = folderElement.getElementsByTagName('img')[0];
+                const inputElement = folderElement.getElementsByTagName('input')[0];
                 const contentElement = document.querySelector('#projectWindow').querySelector('.content');
                 folderElement.style.display = "none";
                 contentElement.appendChild(folderElement);
-                imageElement.addEventListener('dblclick', e => { this.treeLayer = dir.path + '\\' });
+                imageElement.addEventListener('dblclick', e => { 
+                    
+                    this.treeLayer = dir.path + '\\';
+                    this.onTreeUpdated(null);
+                });
                 textElement.addEventListener('dblclick', e => { console.log('changing name'); });
                
+                inputElement.addEventListener('change', e => {
+
+                    e.preventDefault();
+                    e.target.style.display = "none";
+                    textElement.style.display = "block";
+
+                    this.renameDir(this.treeLayer + textElement.textContent, this.treeLayer + e.target.value);
+                });
+
                 const options = [
-                    { text: "Rename", function: this.onItemRename },
-                    { text: "Delete", function: () => this.onItemDelete(textElement.textContent) }
+                    { text: "Rename", function: () => {
+
+                        textElement.style.display = "none";
+                        inputElement.style.display = "block";
+                        inputElement.value = textElement.textContent;
+                    }},
+                    { text: "Delete", function: () => this.onItemDelete(this.treeLayer + textElement.textContent) }
                 ];
                
                 this.addContextMenu(options, folderElement);
@@ -184,7 +236,7 @@ export class OrganizerEditorWindow extends EditorWindow {
         });
     }
 
-    displayTreeLayers() {
+    async displayTreeLayers() {
 
         this.backFolderElement.style.display = (this.treeLayer === '') ? "none" : "block";
 
@@ -195,6 +247,11 @@ export class OrganizerEditorWindow extends EditorWindow {
                 if(dir.path.split('\\').length === this.treeLayer.split('\\').length) {
 
                     dir.element.style.display = "block";
+                    if(dir.ext === Types.OrganizerItemType.Image) {
+
+                        const url = await this.getImage(dir.path);
+                        dir.element.getElementsByTagName('img')[0].src = url;
+                    }
                     continue;
                 }
             }
@@ -227,10 +284,45 @@ export class OrganizerEditorWindow extends EditorWindow {
     //Delete File or Folder On Server And Update Tree
     async onItemDelete(name) {
 
+        console.log(name);
         const body = { projectID: EditorManager.Instance.projectID, name: name };
         const res = await BackendManager.Instance.postAuthenticatedRequest(body, Types.URI.FSDelete);
 
         if(BackendManager.Instance.isOK(res))
             EditorManager.UpdateTreeStructure(res.data.data);
+    }
+
+    async onUploadFile(name, form) {
+
+        form.append('name', name);
+        form.append('projectID', EditorManager.Instance.projectID);
+        const body = form;
+        const res = await BackendManager.Instance.postUpload(body, Types.URI.FSUpload);
+
+        if(BackendManager.Instance.isOK(res))
+            EditorManager.UpdateTreeStructure(res.data.data);
+    }
+
+    async previewFiles() {
+
+        /*const body = { projectID: EditorManager.Instance.projectID };
+        const res = await BackendManager.Instance.postAuthenticatedRequest(body, Types.URI.FSProjectFiles);
+
+        if(BackendManager.Instance.isOK(res)) {
+
+            const files = res.data.data;
+            for(const f of files) {
+
+                const url = Types.URI.FSGetFile + "/" + EditorManager.Instance.projectID + "/" + f;
+                const res = await BackendManager.Instance.getAuthenticatedFile(url);
+                const imgURL = URL.createObjectURL(res.blob);
+                const img = this.tree.dirs.forEach(dir => {
+
+                    console.log(dir.path);
+                });
+                //img.src = imgURL;
+                //this.contentElement.appendChild(img);
+            }
+        }*/
     }
 }
