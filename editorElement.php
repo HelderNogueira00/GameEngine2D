@@ -138,6 +138,21 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                 <div class="component" id="textureRendererComponent">
+                                   <div class="title"><h2>Texture Renderer</h2></div>
+                                    <div class="body">
+                                        <div class="row">
+                                            <div class="title">
+                                                <h6>Texture: </h6>
+                                            </div>    
+                                            <div class="args">
+                                                <div id="fileInput">File Input</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div id="rendererComponent" class="component">
                                   <div class="title"><h2>Renderer Component</h2><button>Remove</button></div>
                                     <div class="body">

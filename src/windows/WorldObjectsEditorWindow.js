@@ -6,6 +6,7 @@ import { EmptyGameObject } from "../objects/EmptyGameObject";
 import { Types } from "../config/EngineStructs";
 import { RendererGameObject } from "../objects/RendererGameObject";
 import { TextRendererObject } from "../objects/TextRendererObject";
+import { TextureRendererGameObject } from "../objects/TextureRendererGameObject";
 
 export class WorldObjectEditorWindow extends EditorWindow {
 
@@ -15,13 +16,19 @@ export class WorldObjectEditorWindow extends EditorWindow {
         const contextMenuOptions = [
             { text: "New Empty GameObject", function: this.onNewGameObject },
             { text: "New 2DRenderer Object", function: this.onNew2DRenderer },
-            { text: "New Text Renderer", function: this.onNewTextRenderer }
+            { text: "New Text Renderer", function: this.onNewTextRenderer },
+            { text: "New Texture Renderer", function: this.onNewTextureRenderer }
         ];
 
         this.currentObjectSelected = -1;
         this.gameObjects = [];
         this.ewm = EditorWindowManager.Instance;
         this.enableContextMenu(contextMenuOptions);
+    }
+
+    onNewTextureRenderer = () => {
+
+        this.engine.createObject(TextureRendererGameObject);
     }
 
     onNewTextRenderer = () => {

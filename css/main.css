@@ -773,3 +773,12 @@ select {
     justify-content: flex-start;
     gap: 8px;
 }
+
+#textureRendererComponent #fileInput {
+
+    padding: 12px;
+    font-size: 0.8rem;
+
+    border-radius: 4px;
+    border: 1px solid #303030;
+}

@@ -4,6 +4,7 @@ import { Types } from "../config/EngineStructs";
 import { RendererComponent } from "../components/RendererComponent";
 import { TransformComponent } from "../components/TransformComponent";
 import { TextRendererComponent } from "../components/TextRendererComponent";
+import { TextureRendererComponent } from "../components/TextureRendererComponent";
 
 export class GameObject {
 
@@ -39,6 +40,7 @@ export class GameObject {
             case Types.Component.Transform: this.components.push(new TransformComponent(this)); break;
             case Types.Component.Renderer: this.components.push(new RendererComponent(this)); break;
             case Types.Component.TextRenderer: this.components.push(new TextRendererComponent(this)); break;
+            case Types.Component.TextureRenderer: this.components.push(new TextureRendererComponent(this)); break;
         }
     }
 

@@ -5,7 +5,8 @@ export class Types {
         Undefined: 0,
         Transform: 1,
         Renderer: 2,
-        TextRenderer: 3
+        TextRenderer: 3,
+        TextureRenderer: 4
     });
 
     static Event = Object.freeze({
