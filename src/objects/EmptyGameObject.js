@@ -1,8 +1,8 @@
-import { EditorManager } from "../managers/EditorManager";
-import { Types } from "../config/EngineStructs";
-import { GameObject } from "../base/GameObject";
-import { InputManager } from "../managers/InputManager";
-import { ConsoleManager } from "../managers/ConsoleManager";
+import { EditorManager } from "../managers/EditorManager.js";
+import { Types } from "../config/EngineStructs.js";
+import { GameObject } from "../base/GameObject.js";
+import { InputManager } from "../managers/InputManager.js";
+import { ConsoleManager } from "../managers/ConsoleManager.js";
 
 export class EmptyGameObject extends GameObject {
     

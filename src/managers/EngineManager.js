@@ -1,14 +1,14 @@
-import { ConsoleManager } from "./ConsoleManager";
-import { EditorManager } from "./EditorManager";
-import { EditorWindowManager } from "./EditorWindowManager";
-import { EngineConfig } from "../config/EngineConfig";;
-import { Types } from "../config/EngineStructs";
-import { EngineUI } from "./EngineUI";
-import { GameObject } from "../base/GameObject";
-import { InputManager } from "./InputManager";
-import { BackendManager } from "./BackendManager";
-import { BackendEvents } from "../config/BackendEvents";
-import { EventsManager } from "./EventsManager";
+import { ConsoleManager } from "./ConsoleManager.js";
+import { EditorManager } from "./EditorManager.js";
+import { EditorWindowManager } from "./EditorWindowManager.js";
+import { EngineConfig } from "../config/EngineConfig.js";;
+import { Types } from "../config/EngineStructs.js";
+import { EngineUI } from "./EngineUI.js";
+import { GameObject } from "../base/GameObject.js";
+import { InputManager } from "./InputManager.js";
+import { BackendManager } from "./BackendManager.js";
+import { BackendEvents } from "../config/BackendEvents.js";
+import { EventsManager } from "./EventsManager.js";
 
 export class EngineManager {
     

@@ -1,10 +1,10 @@
-import { EngineConfig } from "../config/EngineConfig";
-import { Types } from "../config/EngineStructs";
-import { ConsoleManager } from "./ConsoleManager";
-import { EditorManager } from "./EditorManager";
-import { EditorWindowManager } from "./EditorWindowManager";
-import { LoginManager } from "./LoginManager";
-import { ProjectsManager } from "./ProjectsManager";
+import { EngineConfig } from "../config/EngineConfig.js";
+import { Types } from "../config/EngineStructs.js";
+import { ConsoleManager } from "./ConsoleManager.js";
+import { EditorManager } from "./EditorManager.js";
+import { EditorWindowManager } from "./EditorWindowManager.js";
+import { LoginManager } from "./LoginManager.js";
+import { ProjectsManager } from "./ProjectsManager.js";
 
 export class BackendManager {
 

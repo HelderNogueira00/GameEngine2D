@@ -762,6 +762,7 @@ select {
 #createNewProject {
 
     display: none;
+
 }
 
 #createNewProject form {
@@ -776,7 +777,9 @@ select {
 
 #textureRendererComponent #fileInput {
 
-    padding: 12px;
+    padding: 2px;
+    width: 60px;
+    height: 20px;
     font-size: 0.8rem;
 
     border-radius: 4px;

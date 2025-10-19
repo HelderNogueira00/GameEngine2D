@@ -1,9 +1,9 @@
-import { EditorWindow } from "../base/EditorWindow";
-import { Types } from "../config/EngineStructs";
-import { BackendManager } from "../managers/BackendManager";
-import { ConsoleManager } from "../managers/ConsoleManager";
-import { EditorManager } from "../managers/EditorManager";
-import { EditorWindowManager } from "../managers/EditorWindowManager";
+import { EditorWindow } from "../base/EditorWindow.js";
+import { Types } from "../config/EngineStructs.js";
+import { BackendManager } from "../managers/BackendManager.js";
+import { ConsoleManager } from "../managers/ConsoleManager.js";
+import { EditorManager } from "../managers/EditorManager.js";
+import { EditorWindowManager } from "../managers/EditorWindowManager.js";
 
 export class OrganizerEditorWindow extends EditorWindow {
 
@@ -36,7 +36,7 @@ export class OrganizerEditorWindow extends EditorWindow {
 
         this.backFolderElement.addEventListener('dblclick', e => { 
 
-            const barsLength = this.treeLayer.split('\\').length;
+            const barsLength = this.treeLayer.split('/').length;
             if(barsLength === 2) {
 
                 this.treeLayer = '';
@@ -44,7 +44,7 @@ export class OrganizerEditorWindow extends EditorWindow {
                 return;
             }
 
-            const current = this.treeLayer.split('\\')[barsLength - 2];
+            const current = this.treeLayer.split('/')[barsLength - 2];
             const index = this.treeLayer.indexOf(current);
             const previousPath = this.treeLayer.substring(0, index);
             this.treeLayer = previousPath;
@@ -165,8 +165,8 @@ export class OrganizerEditorWindow extends EditorWindow {
 
     async getImage(basePath) {
 
-        const name = EditorManager.Instance.projectName.replaceAll("\\", "_");
-        const path = basePath.replaceAll("\\", "_");
+        const name = EditorManager.Instance.projectName.replaceAll("/", "_");
+        const path = basePath.replaceAll("/", "_");
         const url = Types.URI.FSGetFile + "/" + name + "/" + path;
         const res = await BackendManager.Instance.getAuthenticatedFile(url); 
         const imageURL = URL.createObjectURL(res.blob);
@@ -179,7 +179,7 @@ export class OrganizerEditorWindow extends EditorWindow {
 
             if(dir.element === null || dir.element === undefined) {
 
-                const name = dir.path.split('\\').pop();
+                const name = dir.path.split('/').pop();
                 let imagePath = "";
                 switch(dir.ext) {
 
@@ -206,8 +206,12 @@ export class OrganizerEditorWindow extends EditorWindow {
                 contentElement.appendChild(folderElement);
                 imageElement.addEventListener('dblclick', e => { 
                     
-                    this.treeLayer = dir.path + '\\';
+                    this.treeLayer = dir.path + '/';
                     this.onTreeUpdated(null);
+                });
+                imageElement.addEventListener('dragstart', e => {
+
+                    e.dataTransfer.setData('text/plain', e.target.src + "|" + name);
                 });
                 textElement.addEventListener('dblclick', e => { console.log('changing name'); });
                
@@ -244,7 +248,7 @@ export class OrganizerEditorWindow extends EditorWindow {
             
             if(dir.path.startsWith(this.treeLayer)) {
 
-                if(dir.path.split('\\').length === this.treeLayer.split('\\').length) {
+                if(dir.path.split('/').length === this.treeLayer.split('/').length) {
 
                     dir.element.style.display = "block";
                     if(dir.ext === Types.OrganizerItemType.Image) {

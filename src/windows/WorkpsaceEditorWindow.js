@@ -1,7 +1,7 @@
-import { EditorManager } from "../managers/EditorManager";
-import { EditorWindow } from "../base/EditorWindow";
-import { EditorWindowManager } from "../managers/EditorWindowManager";
-import { Types } from "../config/EngineStructs";
+import { EditorManager } from "../managers/EditorManager.js";
+import { EditorWindow } from "../base/EditorWindow.js";
+import { EditorWindowManager } from "../managers/EditorWindowManager.js";
+import { Types } from "../config/EngineStructs.js";
 
 export class WorkspaceEditorWindow extends EditorWindow {
 

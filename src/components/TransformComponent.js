@@ -1,6 +1,6 @@
-import { Component } from "../base/Component";
-import { Types } from "../config/EngineStructs";
-import { EditorManager } from "../managers/EditorManager";
+import { Component } from "../base/Component.js";
+import { Types } from "../config/EngineStructs.js";
+import { EditorManager } from "../managers/EditorManager.js";
 
 export class TransformComponent extends Component {
 

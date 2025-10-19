@@ -1,5 +1,5 @@
-import { Types } from "../config/EngineStructs";
-import { GameObject } from "../base/GameObject";
+import { Types } from "../config/EngineStructs.js";
+import { GameObject } from "../base/GameObject.js";
 
 export class RendererGameObject extends GameObject {
 

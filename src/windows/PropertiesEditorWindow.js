@@ -1,9 +1,9 @@
-import { Component } from "../base/Component";
-import { ConsoleManager } from "../managers/ConsoleManager";
-import { EditorWindow } from "../base/EditorWindow";
-import { EditorWindowManager } from "../managers/EditorWindowManager";
-import { Types } from "../config/EngineStructs";
-import { EditorManager } from "../managers/EditorManager";
+import { Component } from "../base/Component.js";
+import { ConsoleManager } from "../managers/ConsoleManager.js";
+import { EditorWindow } from "../base/EditorWindow.js";
+import { EditorWindowManager } from "../managers/EditorWindowManager.js";
+import { Types } from "../config/EngineStructs.js";
+import { EditorManager } from "../managers/EditorManager.js";
 
 export class PropertiesEditorWindow extends EditorWindow {
 
@@ -19,6 +19,7 @@ export class PropertiesEditorWindow extends EditorWindow {
         this.objPropertiesElement = document.querySelector('.objectProperties');
         this.objComponentsElement = this.objPropertiesElement.querySelector('.components');
         this.addComponentElement = document.querySelector('#addComponent');
+        this.textureRendererInput = document.querySelector('#textureRendererComponent').querySelector('#fileInput'),
 
         this.currentObjectID = -1;
 
@@ -32,7 +33,36 @@ export class PropertiesEditorWindow extends EditorWindow {
         this.objAddComponent.addEventListener('click', e => { this.toggleAddComponent() });
         this.addComponentElement.querySelectorAll('.li').forEach(el => { el.addEventListener('click', e => { this.onNewComponent(e.target); })});
 
+        this.createListeners();
         this.linkElements();
+    }
+
+    createListeners() {
+
+        this.textureRendererInput.addEventListener('dragover', e => e.preventDefault());
+        this.textureRendererInput.addEventListener('drop', e => this.onTextureDropped(e));
+    }
+
+    onTextureDropped(e) {
+
+        e.preventDefault();
+
+        const go = EditorManager.GetGameObject(this.currentObjectID);
+        if(go !== undefined) {
+
+            const renderer = go.getComponent(Types.Component.TextureRenderer);
+            if(renderer !== undefined) {
+
+                const textureSource = e.dataTransfer.getData('text/plain').split('|')[0];
+                const textureName = e.dataTransfer.getData('text/plain').split('|')[1];
+
+                if(textureName && textureSource) {
+
+                    this.textureRendererInput.textContent = textureName;
+                    renderer.onTextureDropped(textureName, textureSource);
+                }
+            }
+        }
     }
 
     onNewComponent(target) {
@@ -65,10 +95,20 @@ export class PropertiesEditorWindow extends EditorWindow {
 
     onObjectSelected(event) {
 
-        const gameObject = EditorWindowManager.Instance.getEngine().getGameObject(event.data);
+        const gameObject = EditorManager.GetGameObject(event.data);
         this.currentObjectID = gameObject.id;
         this.objIDElement.textContent = "GameObject ID: " + gameObject.id;
         this.objNameElement.textContent = gameObject.name;
+
+        gameObject.components.forEach(component => {
+
+            switch(component.type) {
+
+                case Types.Component.TextureRenderer:
+                    this.textureRendererInput.textContent = component.textureName;
+                    break;
+            }
+        });
 
         gameObject.components.forEach(component => this.applyComponentData(component));
 
@@ -81,6 +121,7 @@ export class PropertiesEditorWindow extends EditorWindow {
         this.currentObjectID = -1;
         this.objIDElement.textContent = "0";
         this.objNameElement.textContent = "";
+        this.textureRendererInput.textContent = "";
         this.objPropertiesElement.style.display = "none";
 
         document.querySelectorAll('.component').forEach(component => component.style.display = "none");

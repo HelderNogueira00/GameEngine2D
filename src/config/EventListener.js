@@ -1,5 +1,5 @@
-import { BackendManager } from "../managers/BackendManager";
-import { EventsManager } from "../managers/EventsManager";
+import { BackendManager } from "../managers/BackendManager.js";
+import { EventsManager } from "../managers/EventsManager.js";
 
 export class EventListener {
 

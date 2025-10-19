@@ -150,6 +150,76 @@
                                                 <div id="fileInput">File Input</div>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                        <div class="title">
+                                        <h6>Opacity: </h6>
+                                        </div>
+                                        <div class="args">
+                                        <input id="opacityInput" type="number" value="0"/>
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <div class="title">
+                                        <h6>Sizing Method: </h6>
+                                        </div>
+                                        <div class="args">
+                                        <select id="sizingInput" name="">
+                                            <option value="color">Fit Object</option>
+                                            <option value="color">Original</option>
+                                            <option value="color">Fill Object</option>
+                                        </select>
+                                        </div>
+                                        </div>
+
+                                        <div class="row">
+                                        <div class="title">
+                                        <h6>Repeat Mode: </h6>
+                                        </div>
+                                        <div class="args">
+                                        <select id="repeatInput" name="">
+                                        <option value="color">No Repeat</option>
+                                        <option value="color">Both</option>
+                                        <option value="color">Vertical</option>
+                                        <option value="color">Horizontal</option>
+                                        </select>
+                                        </div>
+                                        </div>
+
+                                        <div class="row">
+                                        <div class="title">
+                                        <h6>Offset: </h6>
+                                        </div>
+                                        <div class="args">
+                                        <p >X: </p>
+                                        <input id="xOffsetInput" type="number"/>
+                                        <p >Y: </p>
+                                        <input id="yOffsetInput" type="number"/>
+                                        </div>
+                                        </div>
+
+                                        <div class="row">
+                                        <div class="title">
+                                        <h6>Radius Top: </h6>
+                                        </div>
+                                        <div class="args">
+                                        <p >Left: </p>
+                                        <input id="radiusTLInput" type="number"/>
+                                        <p >Right: </p>
+                                        <input id="radiusTRInput" type="number"/>
+                                        </div>
+                                        </div>
+
+                                        <div class="row">
+                                        <div class="title">
+                                        <h6>Radius Bottom: </h6>
+                                        </div>
+                                        <div class="args">
+                                        <p >Left: </p>
+                                        <input id="radiusBLInput" type="number"/>
+                                        <p >Right: </p>
+                                        <input id="radiusBRInput" type="number"/>
+                                        </div>
+                                        </div>
                                     </div>
                                 </div>
 

@@ -1,4 +1,4 @@
-import { Types } from "../config/EngineStructs";
+import { Types } from "../config/EngineStructs.js";
 
 export class Component {
 
@@ -15,7 +15,6 @@ export class Component {
         this.createListeners();
         this.start();
     }
-
 
     start() {}
     update() {}

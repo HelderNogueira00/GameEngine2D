@@ -1,13 +1,13 @@
-import { ConsoleEditorWindow } from "../windows/ConsoleEditorWindow";
-import { EditorWindow } from "../base/EditorWindow";
-import { Types } from "../config/EngineStructs";
-import { OrganizerEditorWindow } from "../windows/OrganizerEditorWindow";
-import { PropertiesEditorWindow } from "../windows/PropertiesEditorWindow";
-import { StatsEditorWindow } from "../windows/StatsEditorWindow";
-import { WorkspaceEditorWindow } from "../windows/WorkpsaceEditorWindow";
-import { WorldObjectEditorWindow } from "../windows/WorldObjectsEditorWindow";
-import { CodeEditorWindow } from "../windows/CodeEditorWindow";
-import { EventListener } from "../config/EventListener";
+import { ConsoleEditorWindow } from "../windows/ConsoleEditorWindow.js";
+import { EditorWindow } from "../base/EditorWindow.js";
+import { Types } from "../config/EngineStructs.js";
+import { OrganizerEditorWindow } from "../windows/OrganizerEditorWindow.js";
+import { PropertiesEditorWindow } from "../windows/PropertiesEditorWindow.js";
+import { StatsEditorWindow } from "../windows/StatsEditorWindow.js";
+import { WorkspaceEditorWindow } from "../windows/WorkpsaceEditorWindow.js";
+import { WorldObjectEditorWindow } from "../windows/WorldObjectsEditorWindow.js";
+import { CodeEditorWindow } from "../windows/CodeEditorWindow.js";
+import { EventListener } from "../config/EventListener.js";
 
 export class EditorWindowManager  {
 

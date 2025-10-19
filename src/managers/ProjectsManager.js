@@ -1,7 +1,7 @@
-import { Types } from "../config/EngineStructs";
-import { EventListener } from "../config/EventListener";
-import { BackendManager } from "./BackendManager";
-import { EventsManager } from "./EventsManager";
+import { Types } from "../config/EngineStructs.js";
+import { EventListener } from "../config/EventListener.js";
+import { BackendManager } from "./BackendManager.js";
+import { EventsManager } from "./EventsManager.js";
 
 export class ProjectsManager {
 

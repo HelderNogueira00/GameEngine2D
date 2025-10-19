@@ -1,4 +1,4 @@
-import { Types } from "../config/EngineStructs";
+import { Types } from "../config/EngineStructs.js";
 
 export class EditorWindow {
 

@@ -1,12 +1,12 @@
 
-import { ConsoleManager } from "../managers/ConsoleManager";
-import { EditorWindow } from "../base/EditorWindow";
-import { EditorWindowManager } from "../managers/EditorWindowManager";
-import { EmptyGameObject } from "../objects/EmptyGameObject";
-import { Types } from "../config/EngineStructs";
-import { RendererGameObject } from "../objects/RendererGameObject";
-import { TextRendererObject } from "../objects/TextRendererObject";
-import { TextureRendererGameObject } from "../objects/TextureRendererGameObject";
+import { ConsoleManager } from "../managers/ConsoleManager.js";
+import { EditorWindow } from "../base/EditorWindow.js";
+import { EditorWindowManager } from "../managers/EditorWindowManager.js";
+import { EmptyGameObject } from "../objects/EmptyGameObject.js";
+import { Types } from "../config/EngineStructs.js";
+import { RendererGameObject } from "../objects/RendererGameObject.js";
+import { TextRendererObject } from "../objects/TextRendererObject.js";
+import { TextureRendererGameObject } from "../objects/TextureRendererGameObject.js";
 
 export class WorldObjectEditorWindow extends EditorWindow {
 

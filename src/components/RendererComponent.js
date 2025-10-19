@@ -1,5 +1,5 @@
-import { Component } from "../base/Component";
-import { Types } from "../config/EngineStructs";
+import { Component } from "../base/Component.js";
+import { Types } from "../config/EngineStructs.js";
 
 export class RendererComponent extends Component {
 

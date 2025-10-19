@@ -1,4 +1,4 @@
-import { EditorWindow } from "../base/EditorWindow";
+import { EditorWindow } from "../base/EditorWindow.js";
 
 
 export class ConsoleEditorWindow extends EditorWindow{

@@ -1,8 +1,8 @@
-import { EditorWindowManager } from "./EditorWindowManager";
-import { EngineConfig } from "../config/EngineConfig";
-import { ProjectsManager } from "./ProjectsManager";
-import { LoginUI } from "../ui/LoginUI";
-import { LoginManager } from "./LoginManager";
+import { EditorWindowManager } from "./EditorWindowManager.js";
+import { EngineConfig } from "../config/EngineConfig.js";
+import { ProjectsManager } from "./ProjectsManager.js";
+import { LoginUI } from "../ui/LoginUI.js";
+import { LoginManager } from "./LoginManager.js";
 
 export class EngineUI {
 

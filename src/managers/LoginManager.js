@@ -1,8 +1,8 @@
-import { BackendEvents } from "../config/BackendEvents";
-import { Types } from "../config/EngineStructs";
-import { BackendManager } from "./BackendManager";
-import { EditorWindowManager } from "./EditorWindowManager";
-import { EventsManager } from "./EventsManager";
+import { BackendEvents } from "../config/BackendEvents.js";
+import { Types } from "../config/EngineStructs.js";
+import { BackendManager } from "./BackendManager.js";
+import { EditorWindowManager } from "./EditorWindowManager.js";
+import { EventsManager } from "./EventsManager.js";
 
 export class LoginManager {
 

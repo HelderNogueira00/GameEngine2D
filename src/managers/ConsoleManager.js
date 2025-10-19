@@ -1,5 +1,5 @@
-import { EditorWindow } from "../base/EditorWindow";
-import { EditorWindowManager } from "./EditorWindowManager";
+import { EditorWindow } from "../base/EditorWindow.js";
+import { EditorWindowManager } from "./EditorWindowManager.js";
 
 export class ConsoleManager {
 

@@ -1,6 +1,6 @@
-import { EditorWindow } from "../base/EditorWindow";
-import { Types } from "../config/EngineStructs";
-import { EditorWindowManager } from "../managers/EditorWindowManager";
+import { EditorWindow } from "../base/EditorWindow.js";
+import { Types } from "../config/EngineStructs.js";
+import { EditorWindowManager } from "../managers/EditorWindowManager.js";
 
 export class CodeEditorWindow extends EditorWindow {
 

@@ -1,4 +1,4 @@
-import { EventListener } from "../config/EventListener";
+import { EventListener } from "../config/EventListener.js";
 
 export class UIElement extends EventListener {
     

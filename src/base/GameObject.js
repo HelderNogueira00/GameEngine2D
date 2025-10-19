@@ -1,10 +1,10 @@
-import { Component } from "./Component";
-import { EditorWindowManager } from "../managers/EditorWindowManager";
-import { Types } from "../config/EngineStructs";
-import { RendererComponent } from "../components/RendererComponent";
-import { TransformComponent } from "../components/TransformComponent";
-import { TextRendererComponent } from "../components/TextRendererComponent";
-import { TextureRendererComponent } from "../components/TextureRendererComponent";
+import { Component } from "./Component.js";
+import { EditorWindowManager } from "../managers/EditorWindowManager.js";
+import { Types } from "../config/EngineStructs.js";
+import { RendererComponent } from "../components/RendererComponent.js";
+import { TransformComponent } from "../components/TransformComponent.js";
+import { TextRendererComponent } from "../components/TextRendererComponent.js";
+import { TextureRendererComponent } from "../components/TextureRendererComponent.js";
 
 export class GameObject {
 

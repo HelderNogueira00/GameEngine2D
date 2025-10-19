@@ -1,8 +1,7 @@
-
-import { Types } from "../config/EngineStructs";
-import { EventListener } from "../config/EventListener";
-import { BackendManager } from "./BackendManager";
-import { EditorWindowManager } from "./EditorWindowManager";
+import { Types } from "../config/EngineStructs.js";
+import { EventListener } from "../config/EventListener.js";
+import { BackendManager } from "./BackendManager.js";
+import { EditorWindowManager } from "./EditorWindowManager.js";
 
 export class EditorManager extends EventListener {
 

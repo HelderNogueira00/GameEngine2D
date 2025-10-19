@@ -1,7 +1,7 @@
-import { UIElement } from "../base/UIElement";
-import { EngineConfig } from "../config/EngineConfig";
-import { LoginManager } from "../managers/LoginManager";
-import { ProjectsManager } from "../managers/ProjectsManager";
+import { UIElement } from "../base/UIElement.js";
+import { EngineConfig } from "../config/EngineConfig.js";
+import { LoginManager } from "../managers/LoginManager.js";
+import { ProjectsManager } from "../managers/ProjectsManager.js";
 
 export class LoginUI extends UIElement {
 

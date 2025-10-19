@@ -1,4 +1,4 @@
-import { EngineConfig } from "../config/EngineConfig";
+import { EngineConfig } from "../config/EngineConfig.js";
 
 export class EventsManager {
 
