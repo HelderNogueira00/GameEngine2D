@@ -78,19 +78,22 @@ export class OrganizerEditorWindow extends EditorWindow {
     onUploadAsset = () => {
 
         const uploadElement = document.createElement('input');
+        uploadElement.setAttribute('multiple', '');
         uploadElement.type = "file";
         uploadElement.style.display = "none";
         this.contentElement.appendChild(uploadElement);
         uploadElement.click();
         uploadElement.addEventListener('change', e => {
 
-            const file = uploadElement.files[0];
-            const form = new FormData();
-            form.append('myFile', file);
+            for(const f of uploadElement.files) {
 
-            //filter exts
-            this.onUploadFile(this.treeLayer, form);
-            uploadElement.remove();
+                const form = new FormData();
+                form.append('myFile', f);
+
+                //filter exts
+                this.onUploadFile(this.treeLayer, form);
+                uploadElement.remove();
+            }
         });
     }
 
@@ -165,8 +168,8 @@ export class OrganizerEditorWindow extends EditorWindow {
 
     async getImage(basePath) {
 
-        const name = EditorManager.Instance.projectName.replaceAll("/", "_");
-        const path = basePath.replaceAll("/", "_");
+        const name = EditorManager.Instance.projectName.replaceAll("/", ":");
+        const path = basePath.replaceAll("/", ":");
         const url = Types.URI.FSGetFile + "/" + name + "/" + path;
         const res = await BackendManager.Instance.getAuthenticatedFile(url); 
         const imageURL = URL.createObjectURL(res.blob);

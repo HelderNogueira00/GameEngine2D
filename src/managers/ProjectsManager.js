@@ -34,6 +34,7 @@ export class ProjectsManager {
 
         const body = { projectName: projectName, projectDescription: projectDesc };
         await BackendManager.Instance.postAuthenticatedRequest(body, Types.URI.CreateProject);
+        ProjectsManager.Instance.fetchProjects();
         EventsManager.Instance.broadcast({ type: EventsManager.Type.onProjectCreated });
     }
 

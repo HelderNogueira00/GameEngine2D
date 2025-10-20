@@ -3,9 +3,9 @@ import { GameObject } from "../base/GameObject.js";
 
 export class RendererGameObject extends GameObject {
 
-    constructor(id) {
+    constructor(id, config) {
 
-        super(id);
+        super(id, config);
         this.name = "Renderer GameObject";
         this.addComponent(Types.Component.Transform);
         this.addComponent(Types.Component.Renderer);

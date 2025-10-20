@@ -5,58 +5,29 @@ export class TextureRendererComponent extends Component {
 
     constructor(go) {
 
-        const element = {
-
-            parent: document.querySelector('#textureRendererComponent'),
-            opacityInput:  document.querySelector('#textureRendererComponent').querySelector('#opacityInput'),
-            sizingInput:  document.querySelector('#textureRendererComponent').querySelector('#sizingInput'),
-            radiusTLInput: document.querySelector('#textureRendererComponent').querySelector('#radiusTLInput'),
-            radiusTRInput: document.querySelector('#textureRendererComponent').querySelector('#radiusTRInput'),
-            radiusBLInput: document.querySelector('#textureRendererComponent').querySelector('#radiusBLInput'),
-            radiusBRInput: document.querySelector('#textureRendererComponent').querySelector('#radiusBRInput'),
-            reapeatInput: document.querySelector('#textureRendererComponent').querySelector('#repeatInput'),
-            xOffsetInput: document.querySelector('#textureRendererComponent').querySelector('#xOffsetInput'),
-            yOffsetInput: document.querySelector('#textureRendererComponent').querySelector('#yOffsetInput')
-        };
-
-        super(go, Types.Component.TextureRenderer, element);
+        super(go, Types.Component.TextureRenderer);
     }
 
     createListeners() {
 
+        this.layer = 50;
         this.textureName = "";
         this.textureSource = "";
         this.offset = { x: 0, y:0 };
-        this.element.opacityInput.addEventListener('input', e => this.changeOpacity(e.target.value));
-        this.element.sizingInput.addEventListener('change', e => this.changeSizeMode(e.target.options[e.target.selectedIndex].text));
-        this.element.radiusTLInput.addEventListener('input', e => this.radius.topLeft = e.target.value);
-        this.element.radiusTRInput.addEventListener('input', e => this.radius.topRight = e.target.value);
-        this.element.radiusBLInput.addEventListener('input', e => this.radius.bottomLeft = e.target.value);
-        this.element.radiusBRInput.addEventListener('input', e => this.radius.bottomRight = e.target.value);
-        this.element.xOffsetInput.addEventListener('input', e => this.changeOffset(e.target.value, this.offset.y));
-        this.element.yOffsetInput.addEventListener('input', e => this.changeOffset(this.offset.x, e.target.value));
-        this.element.reapeatInput.addEventListener('input', e => this.changeRepeatMode(e.target.options[e.target.selectedIndex].text));
     }
 
     start(){
 
+        this.changeLayer(50);
         this.changeOpacity(1);
         this.changeOffset(0,0);
         this.changeRadius(0,0,0,0);
         this.changeSizeMode("Fit Object");
-
-        this.element.opacityInput.value = this.opacity;
-        //this.element.sizingInput.value = this.sizeMode;
-        this.element.xOffsetInput.value = this.offset.x;
-        this.element.yOffsetInput.value = this.offset.y;
-        this.element.radiusTLInput.value = this.radius.topLeft;
-        this.element.radiusTRInput.value = this.radius.topRight;
-        this.element.radiusBLInput.value = this.radius.bottomLeft;
-        this.element.radiusBRInput.value = this.radius.bottomRight;
     }
 
     update() {
 
+        this.gameObject.editorElement.style.zIndex = this.layer;
         this.gameObject.editorElement.style.backgroundSize = this.sizeMode;
         this.gameObject.editorElement.style.backgroundRepeat = this.repeatMode;
         this.gameObject.editorElement.style.opacity = this.opacity;
@@ -67,11 +38,11 @@ export class TextureRendererComponent extends Component {
         this.gameObject.editorElement.style.borderBottomRightRadius = this.radius.bottomRight + "px";
     }
 
-    onTextureDropped(textureName, textureSource) {
+    onTextureDropped(e) {
 
-        this.textureSource = textureSource;
-        this.textureName = textureName;
-
+        this.textureSource = e.dataTransfer.getData('text/plain').split('|')[0];
+        this.textureName = e.dataTransfer.getData('text/plain').split('|')[1];
+        e.target.textContent = this.textureName;
         this.gameObject.editorElement.style.backgroundImage = "url(" + this.textureSource + ")";
     }
 
@@ -80,6 +51,17 @@ export class TextureRendererComponent extends Component {
         this.offset.x = x;
         this.offset.y = y;
         console.log("Current Offset: " + this.offset.x);
+    }
+
+    changeLayer(z) {
+
+        if(z > 100)
+            z = 100;
+
+        else if (z < 0)
+            z = 0;
+
+        this.layer = z;
     }
 
     changeSizeMode(mode) {
@@ -126,6 +108,42 @@ export class TextureRendererComponent extends Component {
             this.opacity = 1;
 
         else this.opacity = 0;
+    }
+
+    applyConfig(config) {
+
+        this.opacity = config.opacity;
+        this.layer = config.layer;
+        this.radius = config.radius;
+        this.repeatMode = config.repeatMode;
+        this.sizeMode = config.sizeMode;
+        this.offset = config.offset;
+        this.textureName = config.textureName;
+        this.textureSource = config.textureSource;
+    }
+
+    getConfig() {
+
+        return {
+
+            type: this.type,
+            opacity: this.opacity,
+            layer: this.layer,
+            radius: {
+                tl: this.radius.topLeft,
+                tr: this.radius.topRight,
+                bl: this.radius.bottomLeft,
+                br: this.radius.bottomRight
+            },
+            repeatMode: this.repeatMode,
+            sizeMode: this.sizeMode,
+            offset: {
+                x: this.offset.x,
+                y: this.offset.y
+            },
+            textureName: this.textureName,
+            textureSource: this.textureSource
+        };
     }
 
 

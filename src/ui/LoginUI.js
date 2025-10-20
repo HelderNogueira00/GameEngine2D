@@ -172,7 +172,6 @@ export class LoginUI extends UIElement {
 
     onProjectCreated() {
 
-        console.log("passed");
         this.hideContainer("newProject");
         this.hideContainer("login");
         this.showContainer("projects");

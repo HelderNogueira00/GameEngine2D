@@ -6,10 +6,11 @@ import { ConsoleManager } from "../managers/ConsoleManager.js";
 
 export class EmptyGameObject extends GameObject {
     
-    constructor(id) {
+    constructor(id, config) {
 
-        super(id);
+        super(id, config);
         this.addComponent(Types.Component.Transform);
+        this.applyConfig(config);
     }
 
     start() {

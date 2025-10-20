@@ -7,6 +7,7 @@ import { Types } from "../config/EngineStructs.js";
 import { RendererGameObject } from "../objects/RendererGameObject.js";
 import { TextRendererObject } from "../objects/TextRendererObject.js";
 import { TextureRendererGameObject } from "../objects/TextureRendererGameObject.js";
+import { EditorManager } from "../managers/EditorManager.js";
 
 export class WorldObjectEditorWindow extends EditorWindow {
 
@@ -22,6 +23,17 @@ export class WorldObjectEditorWindow extends EditorWindow {
 
         this.currentObjectSelected = -1;
         this.gameObjects = [];
+
+        document.addEventListener("keydown", e => {
+
+            if((e.ctrlKey || e.metaKey) && event.key.toLowerCase() === 'd') {
+
+                console.log('CONTROL+D');
+                e.preventDefault();
+                EditorWindowManager.Instance.sendEvent({ type: Types.Event.OnControlDDown, data: ""});
+            }
+        });
+
         this.ewm = EditorWindowManager.Instance;
         this.enableContextMenu(contextMenuOptions);
     }
@@ -85,7 +97,6 @@ export class WorldObjectEditorWindow extends EditorWindow {
 
     onObjectClick(e, go) {
 
-        ConsoleManager.Warning("Object Clicked: " + go.id);
         if(go.id === this.currentObjectSelected) {
 
             this.deselectObject();
@@ -124,6 +135,7 @@ export class WorldObjectEditorWindow extends EditorWindow {
 
         const go = this.getGameObjectByID(event.data);
         const element = go.element;
+        console.log("ELement " + go.id + ": " + element);
         element.parent.style.backgroundColor = "#151515";
         element.text.style.color = "#f0bc14fa";
 
@@ -131,17 +143,18 @@ export class WorldObjectEditorWindow extends EditorWindow {
         //EditorWindowManager.Instance.getWindow(EditorWindow.Type.Properties).onObjectSelected(go.id);
     }
 
+    onControlDDown(event) {
+
+        const go = EditorManager.GetGameObject(this.currentObjectSelected);
+        if(go !== undefined) {
+
+            const newGO = EditorManager.GetEngine().copyGameObject(this.currentObjectSelected);
+        }
+    }
+
     selectObject(go) {
 
-     /*   const element = this.getGameObjectByID(go.id).element;
-        element.parent.style.backgroundColor = "#151515";
-        element.text.style.color = "#f0bc14fa";
-
-        this.currentObjectSelected = go.id;
-        //EditorWindowManager.Instance.getWindow(EditorWindow.Type.Properties).onObjectSelected(go.id);
-        EditorWindowManager.Instance.sendEvent({ type:Types.Event.ObjectSelected, data: go.id });*/
-                EditorWindowManager.Instance.sendEvent({ type:Types.Event.ObjectSelected, data: go.id });
-
+        EditorWindowManager.Instance.sendEvent({ type:Types.Event.ObjectSelected, data: go.id });
     }
 
     deselectObject() {

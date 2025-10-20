@@ -5,31 +5,7 @@ export class TextRendererComponent extends Component {
 
     constructor(gameObject) {
 
-        const element = {
-
-            parent: document.querySelector('#textRendererComponent'),
-            textTransform: document.querySelector('#textRendererComponent').querySelector('#textTransform'),
-            textData: document.querySelector('#textRendererComponent').querySelector('#textData'),
-            fontFamily: document.querySelector('#textRendererComponent').querySelector('#fontFamily'),
-            fontSize: document.querySelector('#textRendererComponent').querySelector('#fontSize'),
-            textColorRed: document.querySelector('#textRendererComponent').querySelector('#redColor'),
-            textColorGreen: document.querySelector('#textRendererComponent').querySelector('#greenColor'),
-            textColorBlue: document.querySelector('#textRendererComponent').querySelector('#blueColor'),
-            elementBase: 'p'
-        };
-
-        super(gameObject, Types.Component.TextRenderer, element);
-    }
-
-    createListeners() {
-
-        this.element.textTransform.addEventListener('change', e => { this.textTransform = e.target.value });
-        this.element.textData.addEventListener('input', e => { this.textData = e.target.value });
-        this.element.fontFamily.addEventListener('input', e => { this.font.family = e.target.value });
-        this.element.fontSize.addEventListener('input', e => { this.font.size = e.target.value });
-        this.element.textColorRed.addEventListener('input', e=> { this.font.color.red = e.target.value });
-        this.element.textColorGreen.addEventListener('input', e=> { this.font.color.green = e.target.value });
-        this.element.textColorBlue.addEventListener('input', e => { this.font.color.blue = e.target.value });
+        super(gameObject, Types.Component.TextRenderer);
     }
 
     start() {
@@ -43,14 +19,6 @@ export class TextRendererComponent extends Component {
 
         this.textData = "Sample Text Renderer";
         this.textTransform = 'normal';
-
-        this.element.textTransform.value = this.textTransform;
-        this.element.textData.value = this.textData;
-        this.element.fontFamily.value = this.font.family;
-        this.element.fontSize.value = this.font.size;
-        this.element.textColorRed.value = this.font.color.red;
-        this.element.textColorBlue.value = this.font.color.blue;
-        this.element.textColorGreen.value = this.font.color.green;
     }
 
     update() {
@@ -60,5 +28,35 @@ export class TextRendererComponent extends Component {
         this.gameObject.editorTextElement.style.fontSize = this.font.size + "rem";
         this.gameObject.editorTextElement.style.textTransform = this.textTransform;
         this.gameObject.editorTextElement.textContent = this.textData;
+    }
+
+    applyConfig(config) {
+
+        this.textData = config.textData;
+        this.textTransform = config.textTransform;
+        this.font.family = config.font.family;
+        this.font.size = config.font.size;
+        this.font.color.red = config.font.color.red;
+        this.font.color.blue = config.font.color.blue;
+        this.font.color.green = config.font.color.green;
+    }
+
+    getConfig() {
+
+        return {
+
+            type: this.type,
+            font: {
+                family: this.font.family,
+                size: this.font.size,
+                color: {
+                    red: this.font.color.red,
+                    blue: this.font.color.blue,
+                    green: this.font.color.green
+                }
+            },
+            textData: this.textData,
+            textTransform: this.textTransform
+        };
     }
 }

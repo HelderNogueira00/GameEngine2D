@@ -3,9 +3,9 @@ import { Types } from "../config/EngineStructs.js";
 
 export class TextureRendererGameObject extends GameObject {
 
-    constructor(id) {
+    constructor(id, config) {
 
-        super(id);
+        super(id, config);
         this.name = "Texture Renderer";
         this.addComponent(Types.Component.Transform);
         this.addComponent(Types.Component.TextureRenderer);

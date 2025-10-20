@@ -132,6 +132,8 @@ export class WorkspaceEditorWindow extends EditorWindow {
 
             const element = gameObject.editorElement;
             this.gridElement.appendChild(element);
+            this.arrowElement.parent.top = 0;
+            this.arrowElement.parent.left= 0;
             element.appendChild(this.arrowElement.parent);
             element.style.transform = "rotateZ(" + gameObject.getComponent(Types.Component.Transform).rotation.z + "deg)";
         });

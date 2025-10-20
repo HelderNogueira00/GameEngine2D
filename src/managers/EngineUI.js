@@ -85,6 +85,6 @@ export class EngineUI {
         this.playElement.style.display = "none";
         this.editorElement.style.display = "none";
 
-        element.style.display = "block";
+        element.style.display = "flex";
     }
 }

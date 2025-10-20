@@ -9,6 +9,7 @@ import { InputManager } from "./InputManager.js";
 import { BackendManager } from "./BackendManager.js";
 import { BackendEvents } from "../config/BackendEvents.js";
 import { EventsManager } from "./EventsManager.js";
+import { EmptyGameObject } from "../objects/EmptyGameObject.js";
 
 export class EngineManager {
     
@@ -38,13 +39,14 @@ export class EngineManager {
         ConsoleManager.Warning("Editor Framerate Changed: " + framerate);
     }
 
-    createObject(engineObject) {
+    createObject(engineObject, config = null) {
 
-        const object = new engineObject(this.objectsCount);
+        const object = new engineObject(this.objectsCount, config);
         this.objects.push(object);
         this.objectsCount++;
 
         EditorWindowManager.Instance.sendEvent({ type: Types.Event.ObjectCreated, data: object.id});
+        return object;
     }
 
     destroyObject(id) {
@@ -55,6 +57,13 @@ export class EngineManager {
 
         EditorWindowManager.Instance.sendEvent({ type: Types.Event.ObjectDestroyed, data: id, element: object.editorElement});
         ConsoleManager.Warning("GameObject Destroyed!");
+    }
+
+    copyGameObject(id) {
+
+        const go = this.objects.find(obj => obj.id === id);
+        const newGO = this.createObject(EmptyGameObject, go.updateConfig());
+        return newGO;
     }
 
     getGameObjects() {

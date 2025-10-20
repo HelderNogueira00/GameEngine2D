@@ -72,6 +72,7 @@ export class EditorWindow {
                 case Types.Event.OnUserLoggedIn: this.onUserLoggedIn(event); break;
                 case Types.Event.OnUserLoggedOut: this.onUserLoggedOut(event); break;
                 case Types.Event.OnTreeUpdated: this.onTreeUpdated(event); break;
+                case Types.Event.OnControlDDown: this.onControlDDown(event); break;
             }
         }
 
@@ -154,4 +155,5 @@ export class EditorWindow {
     onUserLoggedIn(event) {}
     onUserLoggedOut(event) {}
     onTreeUpdated(event) {}
+    onControlDDown(event) {}
 }

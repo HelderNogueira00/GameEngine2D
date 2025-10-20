@@ -33,8 +33,45 @@ export class GameObject {
         this.editorElement.addEventListener('click', e => EditorWindowManager.Instance.onObjectClick(this.id));
     }
 
+    applyConfig(config) {
+
+        if(config === null || config === undefined)
+            return;
+
+        this.name = config.name;
+        this.gameClass = config.gameClass;
+
+        config.components.forEach(component => {
+
+            const type = component.type;
+            if(this.getComponent(type) === undefined) {
+
+                console.log("COmponent: " + component.type);
+                this.addComponent(type);
+            }
+
+            this.getComponent(type).applyConfig(component);
+        });
+    }
+
+    updateConfig() {
+
+        let config = {
+
+            name: this.name,
+            components: []
+        };
+
+        this.components.forEach(comp => {
+
+            config.components.push(comp.getConfig());
+        });
+
+        return config;
+    }
     addComponent(type) {
 
+        console.log("Adding Component: " + type);
         switch(type) {
 
             case Types.Component.Transform: this.components.push(new TransformComponent(this)); break;
@@ -56,10 +93,13 @@ export class GameObject {
         return this.components.find(component => component.type === type);
     }
 
+    setID(newID) { this.id = newID; }
+
     start() {}
     update() {}
     baseUpdate() {
 
+        this.updateConfig();
         this.components.forEach(component => component.update());
     }
 }

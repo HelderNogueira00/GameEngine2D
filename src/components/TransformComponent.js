@@ -6,40 +6,12 @@ export class TransformComponent extends Component {
 
     constructor(gameObject) {
 
-        const transformComponent = document.querySelector('#transformComponent').cloneNode(true);
-        transformComponent.setAttribute("id", "transformComponent-" + gameObject.id);
-        document.querySelector('.components').appendChild(transformComponent);
-        const element = {
-            
-            parent: transformComponent,
-            xPosInput: transformComponent.querySelector('#xPos'),
-            zRotInput: transformComponent.querySelector('#zRot'),
-            xSclInput: transformComponent.querySelector('#xScl'),
-            yPosInput: transformComponent.querySelector('#yPos'),
-            ySclInput: transformComponent.querySelector('#yScl')
-        }
-        
-        super(gameObject, Types.Component.Transform, element);
-
+        super(gameObject, Types.Component.Transform);
     }
     
-    createListeners() {
-        
-        this.element.xPosInput.addEventListener('input', e => { this.position.x = e.target.value; });
-        this.element.yPosInput.addEventListener('input', e => { this.position.y = e.target.value; });
-        this.element.zRotInput.addEventListener('input', e => { this.rotation.z = e.target.value; });
-        this.element.xSclInput.addEventListener('input', e => { this.scaling.x = e.target.value; });
-        this.element.ySclInput.addEventListener('input', e => { this.scaling.y = e.target.value; });
-    }
-
     start() {
 
         this.reset();
-        this.element.xPosInput.value = this.position.x;
-        this.element.yPosInput.value = this.position.y;
-        this.element.zRotInput.value = this.rotation.z;
-        this.element.xSclInput.value = this.scaling.x;
-        this.element.ySclInput.value = this.scaling.y;
     }
 
     reset() {
@@ -50,12 +22,6 @@ export class TransformComponent extends Component {
     }
 
     update() {
-
-        this.element.xPosInput.value = this.position.x;
-        this.element.yPosInput.value = this.position.y;
-        this.element.zRotInput.value = this.rotation.z;
-        this.element.xSclInput.value = this.scaling.x;
-        this.element.ySclInput.value = this.scaling.y;
 
         this.gameObject.editorElement.style.left = this.position.x * EditorManager.GetPixelPerUnit() + "px";
         this.gameObject.editorElement.style.top = this.position.y * EditorManager.GetPixelPerUnit() + "px";
@@ -78,5 +44,24 @@ export class TransformComponent extends Component {
 
         this.scaling.x += xDir;
         this.scaling.y += yDir;
+    }
+
+    applyConfig(config) {
+
+        this.position = { x: config.position.x, y: config.position.y };
+        this.rotation = { z: config.rotation.z };
+        this.scaling = { x: config.scaling.x, y: config.scaling.y };
+
+    }
+
+    getConfig() {
+
+        return {
+
+            type: this.type,
+            position: this.position,
+            rotation: this.rotation,
+            scaling: this.scaling
+        };
     }
 }
