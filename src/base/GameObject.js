@@ -12,6 +12,7 @@ export class GameObject {
 
         this.id = id;
         this.name = "Object";
+        this.enabled = true;
         this.components = [];
         this.gameClass = null;
         this.editorElement = null;
@@ -94,12 +95,21 @@ export class GameObject {
     }
 
     setID(newID) { this.id = newID; }
+    setActive(val) {
+
+        this.enabled = val;
+        this.editorElement.style.display = val ? "block" : "none";
+        this.editorTextElement.style.display = val ? "block" : "none";
+    }
 
     start() {}
     update() {}
     baseUpdate() {
 
-        this.updateConfig();
-        this.components.forEach(component => component.update());
+        if(this.enabled) {
+
+            this.updateConfig();
+            this.components.forEach(component => component.update());
+        }
     }
 }

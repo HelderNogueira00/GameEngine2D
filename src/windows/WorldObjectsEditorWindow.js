@@ -66,11 +66,13 @@ export class WorldObjectEditorWindow extends EditorWindow {
         gameObjects.forEach(go => {
 
             if(!this.getGameObjectByID(go.id)){
-                
                 this.addGameObject(go);
             }
         });
 
+        const currentGO = EditorManager.GetGameObject(this.currentObjectSelected);
+        if(currentGO)
+            this.getGameObjectByID(this.currentObjectSelected).element.text.style.color = currentGO.enabled ? "#f0bc14fa" : "#303030";
     }
 
     getGameObjectByID(id) {
@@ -120,6 +122,12 @@ export class WorldObjectEditorWindow extends EditorWindow {
 
     onObjectNameChanged(e, id) {
 
+        if (e.key === "F2") {
+
+            this.onObjectDoubleClick(e, id);
+            return;
+        }
+
         if(e.key !== "Enter")
             return;
 
@@ -137,7 +145,7 @@ export class WorldObjectEditorWindow extends EditorWindow {
         const element = go.element;
         console.log("ELement " + go.id + ": " + element);
         element.parent.style.backgroundColor = "#151515";
-        element.text.style.color = "#f0bc14fa";
+        element.text.style.color = EditorManager.GetGameObject(event.data).enabled ? "#f0bc14fa" : "#303030";
 
         this.currentObjectSelected = go.id;
         //EditorWindowManager.Instance.getWindow(EditorWindow.Type.Properties).onObjectSelected(go.id);

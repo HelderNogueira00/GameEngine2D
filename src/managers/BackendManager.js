@@ -21,6 +21,7 @@ export class BackendManager {
         BackendManager.Instance = this;
 
         this.engine = engine;
+        this.apiCount = 0;
         this.listeners = [];
         this.loginManager = new LoginManager(this);
         this.projectsManager = new ProjectsManager();
@@ -64,6 +65,8 @@ export class BackendManager {
             result.status = res.status;
         }
         catch(err) { ConsoleManager.Error('API Error: ' + err)}
+
+        this.apiCount++;
         return result;
     }
 
@@ -94,6 +97,7 @@ export class BackendManager {
             result.status = res.status;
         }
         catch(err) { ConsoleManager.Error('API Error: ' + err)}
+        this.apiCount++;
         return result;
     }
 
@@ -119,6 +123,7 @@ export class BackendManager {
             result.status = res.status;
         }
         catch(err) { ConsoleManager.Error('API Error: ' + err)}
+        this.apiCount++;
         return result;
 
     }
@@ -149,6 +154,7 @@ export class BackendManager {
 
         }
         catch(err) { ConsoleManager.Error('API Error: ' + err)}
+        this.apiCount++;
         return result;
     }
 
@@ -178,6 +184,7 @@ export class BackendManager {
 
         }
         catch(err) { ConsoleManager.Error('API Error: ' + err)}
+        this.apiCount++;
         return result;
     }
 
@@ -202,6 +209,7 @@ export class BackendManager {
 
         }
         catch(err) { ConsoleManager.Error('API Error: ' + err)}
+        this.apiCount++;
         return result;
     }
 

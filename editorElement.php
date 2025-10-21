@@ -89,10 +89,11 @@
                      <div class="content">
                         <div class="objectProperties">
                             <div class="head">
-                                
+
                                 <div class="info">
                                         <h4 class="object-name">Object Name</h4>
                                         <p class="object-id">object ID</p>
+                                        <div class="active"><p>GameObject Enabled: </p><input type="checkbox" id="enabled"/></div>
                                     </div>
                                     <div class="actions">
                                         <p class="object-delete">Remove</p>
@@ -156,7 +157,12 @@
                 </div>
                 <div class="window-body">
                      <div class="content">
-                        
+                        <p id="goCount">GameObjects Count: 0</p>
+                        <p id="loopsCount">Update Loops Count: 0</p>
+                        <p id="assetsCount">Assets File Count: 0</p>
+                        <p id="framerateCount">Editor Framerate: 0</p>
+                        <p id="componentsCount">Components Count: 0</p>
+                        <p id="apiCount">Server API Requests: 0</p>
                      </div>
                 </div>
             </div>

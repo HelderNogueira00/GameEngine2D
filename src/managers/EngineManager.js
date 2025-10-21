@@ -31,6 +31,26 @@ export class EngineManager {
         this.intervalID = setInterval(() => { this.onNewFrame(); }, this.config.EngineFramerate);
     }
 
+    getLoopsCount() {
+
+        const compCount = this.getComponentsCount();
+        const goCount = this.objects.length;
+        const windows = EditorWindowManager.Instance.windows.length;
+
+        return compCount + goCount + windows;
+    }
+
+    getComponentsCount() {
+
+        let count = 0;
+        this.objects.forEach(go => {
+
+            count += go.components.length;
+        });
+
+        return count;
+    }
+
     changeFramerate(framerate) {
 
         clearInterval(this.intervalID);
@@ -74,6 +94,19 @@ export class EngineManager {
     getGameObject(id) {
 
         return this.objects.find(go => go.id === id);
+    }
+
+    getGlobalStats() {
+
+        return {
+
+            goCount: this.objects.length,
+            componentsCount: this.getComponentsCount(),
+            assetsCount: EditorManager.GetAssetsCount(),
+            loopsCount: this.getLoopsCount(),
+            framerate: this.config.EngineFramerate,
+            api: this.backend.apiCount
+        };
     }
 
     initialize(objects) {

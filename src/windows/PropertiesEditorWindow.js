@@ -1,5 +1,3 @@
-
-
 import { Component } from "../base/Component.js";
 import { ConsoleManager } from "../managers/ConsoleManager.js";
 import { EditorWindow } from "../base/EditorWindow.js";
@@ -22,6 +20,7 @@ export class PropertiesEditorWindow extends EditorWindow {
         this.objPropertiesElement = document.querySelector('.objectProperties');
         this.objComponentsElement = this.objPropertiesElement.querySelector('.components');
         this.addComponentElement = document.querySelector('#addComponent');
+        this.enabledElement= document.querySelector("#propertiesWindow").querySelector('#enabled');
         this.components = { transform: null, textRenderer: null, renderer: null, textureRenderer: null };
         this.currentObjectID = -1;
 
@@ -188,6 +187,7 @@ export class PropertiesEditorWindow extends EditorWindow {
 
     getComponentValues(component) {
 
+        this.enabledElement.checked = component.gameObject.enabled;
         switch(component.type) {
 
             case Types.Component.Transform:
@@ -239,6 +239,11 @@ export class PropertiesEditorWindow extends EditorWindow {
     }
 
     addComponentListeners(component) {
+
+        this.enabledElement.addEventListener('change', e=> {
+
+            component.gameObject.setActive(e.target.checked);
+        });
 
         switch(component.type) {
 

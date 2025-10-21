@@ -36,6 +36,7 @@ export class TextureRendererComponent extends Component {
         this.gameObject.editorElement.style.borderTopRightRadius = this.radius.topRight + "px";
         this.gameObject.editorElement.style.borderBottomLeftRadius = this.radius.bottomLeft + "px";
         this.gameObject.editorElement.style.borderBottomRightRadius = this.radius.bottomRight + "px";
+        this.gameObject.editorElement.style.backgroundImage = "url(" + this.textureSource + ")";
     }
 
     onTextureDropped(e) {

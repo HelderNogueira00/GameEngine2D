@@ -16,6 +16,7 @@ export class EditorManager extends EventListener {
         this.onProjectLoaded = this.onProjectLoaded.bind(this);
     }
 
+    static GetAssetsCount() { return EditorManager.Instance.treeStructure.raw.split('|').length; }
     static GetEngine() { return EditorManager.Instance.engine; }
     static GetTreeStructure() { return EditorManager.Instance.treeStructure; }
     static UpdateTreeStructure(tree) { 
