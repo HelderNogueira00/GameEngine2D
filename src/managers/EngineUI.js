@@ -3,6 +3,7 @@ import { EngineConfig } from "../config/EngineConfig.js";
 import { ProjectsManager } from "./ProjectsManager.js";
 import { LoginUI } from "../ui/LoginUI.js";
 import { LoginManager } from "./LoginManager.js";
+import { ThemeManager } from "./ThemeManager.js";
 
 export class EngineUI {
 

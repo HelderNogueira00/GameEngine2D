@@ -8,6 +8,7 @@ import { RendererGameObject } from "../objects/RendererGameObject.js";
 import { TextRendererObject } from "../objects/TextRendererObject.js";
 import { TextureRendererGameObject } from "../objects/TextureRendererGameObject.js";
 import { EditorManager } from "../managers/EditorManager.js";
+import { ThemeManager } from "../managers/ThemeManager.js";
 
 export class WorldObjectEditorWindow extends EditorWindow {
 
@@ -36,6 +37,7 @@ export class WorldObjectEditorWindow extends EditorWindow {
 
         this.ewm = EditorWindowManager.Instance;
         this.enableContextMenu(contextMenuOptions);
+        this.theme = ThemeManager.DarkTheme;
     }
 
     onNewTextureRenderer = () => {
@@ -70,9 +72,7 @@ export class WorldObjectEditorWindow extends EditorWindow {
             }
         });
 
-        const currentGO = EditorManager.GetGameObject(this.currentObjectSelected);
-        if(currentGO)
-            this.getGameObjectByID(this.currentObjectSelected).element.text.style.color = currentGO.enabled ? "#f0bc14fa" : "#303030";
+
     }
 
     getGameObjectByID(id) {
@@ -88,6 +88,7 @@ export class WorldObjectEditorWindow extends EditorWindow {
         inputElement.style.display = "none";
         textElement.textContent = go.name;
         textElement.classList.add('world-objects-name');
+        textElement.style.color = this.theme.secondaryColor;
         element.addEventListener('click', e => EditorWindowManager.Instance.onObjectClick(go.id));
         element.addEventListener('dblclick', e => this.onObjectDoubleClick(e, go.id));
         inputElement.addEventListener('keydown', e => this.onObjectNameChanged(e, go.id));
@@ -139,13 +140,19 @@ export class WorldObjectEditorWindow extends EditorWindow {
         this.selectObject(EditorWindowManager.Instance.getEngine().getGameObject(id));
     }
 
+    onThemeChanged(event) {
+
+        this.theme = event.data;
+        EditorWindowManager.Instance.sendEvent({ type: Types.Event.ObjectDeselected, data: -1 });
+    }
+
     onObjectSelected(event) {
 
         const go = this.getGameObjectByID(event.data);
         const element = go.element;
         console.log("ELement " + go.id + ": " + element);
-        element.parent.style.backgroundColor = "#151515";
-        element.text.style.color = EditorManager.GetGameObject(event.data).enabled ? "#f0bc14fa" : "#303030";
+        element.parent.style.backgroundColor = this.theme.editorColor;
+        element.text.style.color = this.theme.primaryColor;
 
         this.currentObjectSelected = go.id;
         //EditorWindowManager.Instance.getWindow(EditorWindow.Type.Properties).onObjectSelected(go.id);
@@ -169,8 +176,8 @@ export class WorldObjectEditorWindow extends EditorWindow {
 
         this.gameObjects.forEach(go => { 
         
-            go.element.parent.style.backgroundColor = "#202020";
-            go.element.text.style.color = "#f4f4f4";
+            go.element.parent.style.backgroundColor = this.theme.windowBodyColor;
+            go.element.text.style.color = this.theme.secondaryColor;
         });
         this.currentObjectSelected = -1;
     }

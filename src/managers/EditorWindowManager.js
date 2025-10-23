@@ -8,6 +8,7 @@ import { WorkspaceEditorWindow } from "../windows/WorkpsaceEditorWindow.js";
 import { WorldObjectEditorWindow } from "../windows/WorldObjectsEditorWindow.js";
 import { CodeEditorWindow } from "../windows/CodeEditorWindow.js";
 import { EventListener } from "../config/EventListener.js";
+import { ThemeManager } from "./ThemeManager.js";
 
 export class EditorWindowManager  {
 
@@ -24,6 +25,7 @@ export class EditorWindowManager  {
         this.enableWindowResizing();
         this.enableContainerResizing();
 
+        this.themeManager = new ThemeManager();
         this.currentObjectSelected = -1;
     }
 

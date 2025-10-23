@@ -26,7 +26,13 @@ export class EditorManager extends EventListener {
     }
     static GetConfig() { return EditorManager.Instance.engine.config; }
     static GetPixelPerUnit() { return EditorManager.Instance.engine.config.PixelUnit; }
-    static GetGameObjects() { return EditorManager.Instance.engine.objects; }
+    static GetGameObjects() { 
+    
+        if(!this.engine)
+            return [];
+
+        return EditorManager.Instance.engine.objects; 
+    }
     static GetGameObject(id) { return EditorManager.Instance.engine.objects.find(go => go.id === id); }
 
     onFSRefresh(event) {

@@ -5,6 +5,7 @@ import { EditorWindowManager } from "../managers/EditorWindowManager.js";
 import { Types } from "../config/EngineStructs.js";
 import { EditorManager } from "../managers/EditorManager.js";
 import { ComponentsUI } from "../ui/ComponentsUI.js";
+import { ThemeManager } from "../managers/ThemeManager.js";
 
 export class PropertiesEditorWindow extends EditorWindow {
 
@@ -113,6 +114,7 @@ export class PropertiesEditorWindow extends EditorWindow {
 
             newElement.setAttribute('id', 'transformComponent');
             newElement.innerHTML = ComponentsUI.getTransformUI();
+            
             this.components.transform = {
                   type: Types.Component.Transform,
                   parent: newElement,
@@ -183,6 +185,14 @@ export class PropertiesEditorWindow extends EditorWindow {
                 };
                 break;
         }
+
+        newElement.querySelectorAll('input').forEach(el => {
+
+            const theme = ThemeManager.Instance.currentTheme;
+            el.style.backgroundColor = theme.editorColor;
+            el.style.color = theme.secondaryColor;
+            el.style.borderColor = theme.windowBorderColor;
+        });
     }
 
     getComponentValues(component) {

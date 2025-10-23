@@ -22,7 +22,8 @@ export class Types {
         OnUserLoggedIn: 9,
         OnUserLoggedOut: 10,
         OnTreeUpdated: 11,
-        OnControlDDown: 12
+        OnControlDDown: 12,
+        OnThemeChanged: 13
     });
 
     static OrganizerItemType = Object.freeze({

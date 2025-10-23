@@ -18,9 +18,7 @@ input[type=number] {
 body {
 
     font-family: 'Roboto';
-    color: #d4d4d4;
     height: 100vh;
-    background-color: #151515;
 }
 
 #editorElement {
@@ -40,7 +38,6 @@ body {
     padding-left: 5px;
     width: 100vw;
     margin-bottom: 10px;
-    background-color: #151515;
 }
 
 #editorElement .options-bar ul {
@@ -63,7 +60,6 @@ body {
     text-transform: uppercase;
     font-size: 0.8rem;
     text-decoration: none;
-    color: #d4d4d4;
     transition: .2s ease-in;
 }
 
@@ -186,7 +182,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    background-color: #151515;
+    background-color: transparent;
 }
 
 #editorElement .window-header span {
@@ -365,7 +361,7 @@ body {
 }
 
 #windowContextMenu li:hover {
-  background-color: #303030;
+  background-color: rgba(0,0,0,0.1);
 }
 
 .context-menu-option {
@@ -395,7 +391,7 @@ body {
 
 #workspaceGrid .cell:hover {
 
-    background-color: #303030;
+    background-color: rgba(0,0,0,0.5);
 }
 
 #consoleWindow .content p {
@@ -472,7 +468,7 @@ body {
 
 .content p:hover {
 
-    background-color: #151515;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 #propertiesWindow .component .title {
@@ -523,10 +519,9 @@ body {
     padding: 4px;
     border-radius: 2px;
     font-size: 0.75rem;
-    color: white;
+
     margin-left: 5px;
-    background-color: #151515;
-    border: 1px solid #404040;
+    border: 1px solid transparent;
 }
 
 #propertiesWindow .component {

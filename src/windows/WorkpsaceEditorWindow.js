@@ -2,6 +2,7 @@ import { EditorManager } from "../managers/EditorManager.js";
 import { EditorWindow } from "../base/EditorWindow.js";
 import { EditorWindowManager } from "../managers/EditorWindowManager.js";
 import { Types } from "../config/EngineStructs.js";
+import { ThemeManager } from "../managers/ThemeManager.js";
 
 export class WorkspaceEditorWindow extends EditorWindow {
 
@@ -36,9 +37,6 @@ export class WorkspaceEditorWindow extends EditorWindow {
             x: document.querySelector('#arrowX'),
             y: document.querySelector('#arrowY') 
         }
-
-        //this.arrowElement.x.addEventListener('click', e => this.onArrowStart(e, 0));
-        //this.arrowElement.y.addEventListener('click', e => this.onArrowStart(e, 1));
     }
 
     onArrowStart(e, axis) {
@@ -68,6 +66,7 @@ export class WorkspaceEditorWindow extends EditorWindow {
 
         this.gridElement = document.querySelector('#workspaceGrid');
         this.gridObjects = document.querySelector('#gridObjects');
+
         this.gridElement.style.position = "relative";
 
         const rows = 50;
@@ -86,6 +85,8 @@ export class WorkspaceEditorWindow extends EditorWindow {
                 this.gridElement.appendChild(cellElement);
             }
         }
+
+        this.onThemeChanged({data: ThemeManager.DarkTheme});
     }
 
     createListeners() {
@@ -137,6 +138,18 @@ export class WorkspaceEditorWindow extends EditorWindow {
             element.appendChild(this.arrowElement.parent);
             element.style.transform = "rotateZ(" + gameObject.getComponent(Types.Component.Transform).rotation.z + "deg)";
         });
+    }
+
+    onThemeChanged(event) {
+
+        const theme = event.data;
+        console.log('on Theme changed: ' + theme);
+        this.gridElement.style.backgroundColor = theme.workspaceGridBGColor;
+        document.querySelector('#workspaceGrid').querySelectorAll('.cell').forEach(el => {
+
+            el.style.backgroundColor = theme.workspaceGridCellBGColor;
+            el.style.borderColor = theme.workspaceGridCellBorderColor;
+        })
     }
 
     onMouseUp(event) {

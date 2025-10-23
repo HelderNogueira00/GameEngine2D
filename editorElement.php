@@ -12,7 +12,7 @@
         <ul>
             <li><a href="#">Project</a></li>
             <li><a href="#">Build</a></li>
-            <li><a href="#">SETTINGS</a></li>
+            <li><a id="switchTheme" href="#">Theme</a></li>
             <li><a href="#">ABOUT</a></li>
             <li><a href="#">BACKUP</a></li>
             <li><a id="logout" href="#">LOGOUT</a></li>
