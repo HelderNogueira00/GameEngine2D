@@ -40,6 +40,12 @@ export class EditorManager extends EventListener {
         console.log(event);
     }
 
+    onSceneLoad(event) {
+
+        const config = event.data;
+        this.engine.loadScene(config);
+    }
+
     async onProjectLoaded(event) {
 
         this.projectID = event.data.id;

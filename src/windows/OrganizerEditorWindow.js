@@ -4,6 +4,7 @@ import { BackendManager } from "../managers/BackendManager.js";
 import { ConsoleManager } from "../managers/ConsoleManager.js";
 import { EditorManager } from "../managers/EditorManager.js";
 import { EditorWindowManager } from "../managers/EditorWindowManager.js";
+import { ScenesManager } from "../managers/ScenesManager.js";
 
 export class OrganizerEditorWindow extends EditorWindow {
 
@@ -16,6 +17,7 @@ export class OrganizerEditorWindow extends EditorWindow {
         this.emptyElement = this.element.querySelector('#emptyText');
         this.backFolderElement = document.querySelector('#backFolder');
         this.newFolderElement = document.querySelector('#newFolder');
+        this.newSceneElement = document.querySelector('#newScene');
         this.contentElement = document.querySelector('#projectWindow').querySelector('.content');
         this.emptyElement.style.diplay = "none";
         this.createListeners();
@@ -26,7 +28,8 @@ export class OrganizerEditorWindow extends EditorWindow {
         this.mainContextMenuOptions = [
             { text: "Upload Asset", function: this.onUploadAsset },
             { text: "New Javascript", function: this.onNewScript },
-            { text: "New Folder", function: this.onNewFolder }
+            { text: "New Folder", function: this.onNewFolder },
+            { text: "New WorkScene", function: this.onNewScene }
         ];
         this.addContextMenu(this.mainContextMenuOptions, this.contentElement);
         //this.enableContextMenu(this.mainContextMenuOptions);
@@ -58,6 +61,14 @@ export class OrganizerEditorWindow extends EditorWindow {
             e.target.value = "New Folder";
             this.createDir(this.treeLayer + folderName);
             this.newFolderElement.style.display = "none";
+        });
+
+        this.newSceneElement.addEventListener('change', e => {
+
+            const sceneName = e.target.value;
+            e.target.value = "New Scene";
+            this.createScene(this.treeLayer + sceneName);
+            this.newSceneElement.style.display = "none";
         });
     }
 
@@ -103,6 +114,11 @@ export class OrganizerEditorWindow extends EditorWindow {
         ConsoleManager.Warning("Creating New Javascript File.");
     }
 
+    onNewScene = () => {
+
+        this.newSceneElement.style.display = "block";
+    }
+
     onRefresh() {
 
 
@@ -110,7 +126,6 @@ export class OrganizerEditorWindow extends EditorWindow {
 
     onTreeUpdated(event) {
 
-        this.previewFiles();
 
         this.clear();
         this.buildTree();
@@ -149,6 +164,7 @@ export class OrganizerEditorWindow extends EditorWindow {
                 case "FILE": type = Types.OrganizerItemType.File; break;
                 case "SCRIPT": type = Types.OrganizerItemType.Script; break;
                 case "IMAGE": type = Types.OrganizerItemType.Image; break;
+                case "SCENE": type = Types.OrganizerItemType.Scene; break;
                 
                 default: type = Types.OrganizerItemType.File; break;
             }
@@ -190,6 +206,7 @@ export class OrganizerEditorWindow extends EditorWindow {
                     case Types.OrganizerItemType.File: imagePath = "img/file.png"; break;
                     case Types.OrganizerItemType.Image: imagePath = "img/image.png"; break;
                     case Types.OrganizerItemType.Script: imagePath = "img/script.png"; break;
+                    case Types.OrganizerItemType.Scene: imagePath = "img/scene.png"; break;
                 }
 
                 const folderElement = document.createElement('div');
@@ -209,8 +226,19 @@ export class OrganizerEditorWindow extends EditorWindow {
                 contentElement.appendChild(folderElement);
                 imageElement.addEventListener('dblclick', e => { 
                     
-                    this.treeLayer = dir.path + '/';
-                    this.onTreeUpdated(null);
+                    switch(dir.ext) {
+
+                        case Types.OrganizerItemType.Directory:
+                            
+                            this.treeLayer = dir.path + '/';
+                            this.onTreeUpdated(null);
+                        break;
+
+                        case Types.OrganizerItemType.Scene:
+                            
+                            ScenesManager.Instance.loadScene(dir.path);
+                            break;
+                    }
                 });
                 imageElement.addEventListener('dragstart', e => {
 
@@ -268,6 +296,13 @@ export class OrganizerEditorWindow extends EditorWindow {
 
     }
 
+    async createScene(name) {
+
+        const body = { projectName: EditorManager.Instance.projectName, sceneName: name };
+        const res = await BackendManager.Instance.postAuthenticatedRequest(body, Types.URI.CreateScene);
+
+        console.log("Scene Log: " + res.data.data);
+    }
 
     //Create A New Folder On Server And Update Tree
     async createDir(name) {
@@ -310,26 +345,5 @@ export class OrganizerEditorWindow extends EditorWindow {
             EditorManager.UpdateTreeStructure(res.data.data);
     }
 
-    async previewFiles() {
 
-        /*const body = { projectID: EditorManager.Instance.projectID };
-        const res = await BackendManager.Instance.postAuthenticatedRequest(body, Types.URI.FSProjectFiles);
-
-        if(BackendManager.Instance.isOK(res)) {
-
-            const files = res.data.data;
-            for(const f of files) {
-
-                const url = Types.URI.FSGetFile + "/" + EditorManager.Instance.projectID + "/" + f;
-                const res = await BackendManager.Instance.getAuthenticatedFile(url);
-                const imgURL = URL.createObjectURL(res.blob);
-                const img = this.tree.dirs.forEach(dir => {
-
-                    console.log(dir.path);
-                });
-                //img.src = imgURL;
-                //this.contentElement.appendChild(img);
-            }
-        }*/
-    }
 }

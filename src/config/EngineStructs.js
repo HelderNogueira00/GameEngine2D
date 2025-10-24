@@ -23,7 +23,8 @@ export class Types {
         OnUserLoggedOut: 10,
         OnTreeUpdated: 11,
         OnControlDDown: 12,
-        OnThemeChanged: 13
+        OnThemeChanged: 13,
+        OnSceneLoad: 14
     });
 
     static OrganizerItemType = Object.freeze({
@@ -31,7 +32,8 @@ export class Types {
         Directory: 0,
         File: 1,
         Script: 2,
-        Image: 3
+        Image: 3,
+        Scene: 4
     });
 
     static URI = Object.freeze({
@@ -50,7 +52,9 @@ export class Types {
         FetchProjects: 'http://engine.local:3000/projects/fetch',
         DeleteProject: 'http://engine.local:3000/projects/delete',
         CreateProject: 'http://engine.local:3000/projects/create',
-        LoadProject: 'http://engine.local:3000/projects/load'
+        LoadProject: 'http://engine.local:3000/projects/load',
+        CreateScene: 'http://engine.local:3000/scenes/create',
+        LoadScene: 'http://engine.local:3000/scenes/load'
     });
 }
 

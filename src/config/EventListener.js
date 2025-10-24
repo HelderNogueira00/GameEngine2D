@@ -15,6 +15,7 @@ export class EventListener {
     onProjectDeleted() {}
     onProjectLoaded() {}
     onUserLoggedOut() {}
+    onSceneLoad(event) {}
 
     broadcast(event) {
 

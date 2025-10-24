@@ -13,7 +13,7 @@
             <li><a href="#">Project</a></li>
             <li><a href="#">Build</a></li>
             <li><a id="switchTheme" href="#">Theme</a></li>
-            <li><a href="#">ABOUT</a></li>
+            <li><a id="saveScene" href="#">SAVE</a></li>
             <li><a href="#">BACKUP</a></li>
             <li><a id="logout" href="#">LOGOUT</a></li>
         </ul>
@@ -130,6 +130,10 @@
                         <div id="backFolder" class="organizer-folder" style="display: none;"><img src="img/folder.png"><p>../</p></div>
                         <div id="newFolder" class="organizer-folder" style="display: none;"><img src="img/folder.png">
                             <input id="newFolderInput" type="text" max-length="12" value="New Folder"/>
+                        </div>
+
+                        <div id="newScene" class="organizer-folder" style="display: none;"><img src="img/scene.png">
+                            <input id="newSceneInput" type="text" max-length="12" value="New Scene"/>
                         </div>
                     </div>
                 </div>

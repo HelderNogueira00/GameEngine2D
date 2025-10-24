@@ -196,4 +196,9 @@ export class WorldObjectEditorWindow extends EditorWindow {
     }
 
     onObjectDeselected(event) { this.deselectObject(); }
+
+    onSceneLoad(event) {
+
+        
+    }
 }

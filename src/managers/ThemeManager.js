@@ -38,7 +38,7 @@ export class ThemeManager {
 
         this.linkElements();
         this.createThemes();
-        this.applyTheme(this.lightTheme);
+        this.applyTheme(this.darkTheme);
     }
 
     linkElements() {

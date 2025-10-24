@@ -74,6 +74,7 @@ export class EditorWindow {
                 case Types.Event.OnTreeUpdated: this.onTreeUpdated(event); break;
                 case Types.Event.OnControlDDown: this.onControlDDown(event); break;
                 case Types.Event.OnThemeChanged: this.onThemeChanged(event); break;
+                case Types.Event.OnSceneLoad: this.onSceneLoad(event); break;
             }
         }
 
@@ -158,4 +159,5 @@ export class EditorWindow {
     onTreeUpdated(event) {}
     onControlDDown(event) {}
     onThemeChanged(event) {}
+    onSceneLoad(event) {}
 }

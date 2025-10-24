@@ -70,6 +70,8 @@ export class GameObject {
 
         return config;
     }
+
+    
     addComponent(type) {
 
         console.log("Adding Component: " + type);

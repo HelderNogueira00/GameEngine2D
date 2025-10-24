@@ -10,6 +10,7 @@ import { BackendManager } from "./BackendManager.js";
 import { BackendEvents } from "../config/BackendEvents.js";
 import { EventsManager } from "./EventsManager.js";
 import { EmptyGameObject } from "../objects/EmptyGameObject.js";
+import { ScenesManager } from "./ScenesManager.js";
 
 export class EngineManager {
     
@@ -17,6 +18,7 @@ export class EngineManager {
     constructor(...objects) {
 
         this.eventsManager = new EventsManager(this);
+        this.scenesManager = new ScenesManager();
         this.input = new InputManager();
         this.config = new EngineConfig();
         this.ui = new EngineUI(this);
@@ -29,6 +31,27 @@ export class EngineManager {
 
         EngineManager.Instance = this;
         this.intervalID = setInterval(() => { this.onNewFrame(); }, this.config.EngineFramerate);
+    }
+
+    loadScene(config) {
+
+        this.destroyAllGameObjects();
+        if(config.objects) {
+
+            config.objects.forEach(go => this.createObject(EmptyGameObject, go));
+        }
+    }
+
+    destroyAllGameObjects() {
+
+        while(this.objects.length > 0) {
+
+            for(const go of this.objects) {
+
+                console.log("GO ID: " + go.id);
+                this.destroyObject(go.id);
+            }
+        }
     }
 
     getLoopsCount() {
@@ -65,6 +88,7 @@ export class EngineManager {
         this.objects.push(object);
         this.objectsCount++;
 
+        console.log(this.objects);
         EditorWindowManager.Instance.sendEvent({ type: Types.Event.ObjectCreated, data: object.id});
         return object;
     }
@@ -76,7 +100,6 @@ export class EngineManager {
         this.objects.splice(index, 1);
 
         EditorWindowManager.Instance.sendEvent({ type: Types.Event.ObjectDestroyed, data: id, element: object.editorElement});
-        ConsoleManager.Warning("GameObject Destroyed!");
     }
 
     copyGameObject(id) {
