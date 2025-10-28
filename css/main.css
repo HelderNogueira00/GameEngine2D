@@ -19,6 +19,8 @@ body {
 
     font-family: 'Roboto';
     height: 100vh;
+
+    background-color: #151515;
 }
 
 #editorElement {
@@ -747,22 +749,44 @@ height: 100%;
     align-items: center;
     justify-content: flex-start;
 
+    width: 100%;
     max-height: 70px;
+    background-color: #202020;
+    border-radius: 6px;
 
     padding: 15px;
+    color: #d5d5d5;
     margin: 12px;
+    transition: .1s ease;
 }
 
 #projectsListContainer .projectList-item:hover {
 
     cursor: pointer;
-    background-color: #303030;
+    background-color: #101010;
+    transform: scale(100.1%);
 }
 
 #projectsListContainer .projectList-item .left {
 
     width: 100%;
 }
+
+
+#projectsListContainer .projectList-item .left #name {
+
+    color:#d5d5d5;
+    font-size: 1rem;
+    font-weight: bold;
+    width: 100%;
+}
+
+#projectsListContainer .projectList-item .left #desc {
+
+    font-size: 0.8rem;
+    padding-top: 5px;
+    color: #d5d5d5da;
+} 
 
 #projectsListContainer .projectList-item .right {
 
@@ -818,4 +842,213 @@ height: 100%;
 
     border-radius: 4px;
     border: 1px solid #303030;
+}
+
+#loadingPanel {
+
+    display: none;
+
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#loadingPanel .body {
+
+    padding: 35px;
+    border: 2px solid #404040;
+    background-color: #000;
+}
+
+#loadingPanel p {
+
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.initContainer {
+
+    width: 450px;
+    
+
+    color: white;
+    background-color: #151515;
+
+    border-radius: 6px;
+    border: 1px solid #dab40cc0;
+
+    padding: 25px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.initContainer h5 {
+
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+}
+
+.initContainer p {
+
+    color: #d5d5d5;
+    font-size: 0.9rem;
+
+    margin-bottom: 45px;
+}
+
+.initContainer form {
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.initContainer form input {
+
+    margin-bottom: 8px;
+    height: 35px;
+    width: 220px;
+
+    color: #d5d5d5;
+    border-radius: 4px;
+    border: 1px solid #202020;
+    background-color: #101010;
+    padding-left: 7px;
+}
+
+.primary-btn  {
+
+    width: 220px;
+    height: 40px;
+
+    margin-bottom: 25px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-weight: bold;
+    color: #151515;
+    border-radius: 4px;
+    margin-top: 15px;
+    border: 1px solid #202020;
+    background-color: #dab40c;
+    transition: .2s ease-in;
+}
+
+.primary-btn:hover {
+
+    color: #d5d5d5;
+    border: 1px solid #dab40c;
+    background-color: #151515;
+}
+
+.initContainer a {
+
+    cursor: pointer;
+    margin: 8px;
+    font-size: 0.8rem;
+
+    transition: .1s ease;
+}
+
+.initContainer a:hover {
+    
+    color: #dab40c;
+
+}
+
+#projectsListContainer, #newProjectContainer {
+
+    width: 100vw;
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#projectsListContainer .top, #newProjectContainer .top {
+
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+#projectsListContainer .primary-btn, #newProjectContainer .primary-btn {
+
+    width: auto;
+    height: auto;
+    padding: 15px;
+}
+
+#projectsListContainer .top .title, #newProjectContainer .top .title {
+
+    color: #d5d5d5;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#newProjectContainer form {
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    max-width: 300px;
+}
+
+#newProjectContainer form .row {
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+#newProjectContainer form p {
+
+    color: #d5d5d5;
+    font-size: 0.9rem;
+    width: 180px;
+}
+
+#newProjectContainer form input, #newProjectContainer form textarea {
+
+    margin-left: 7px;
+    height: 30px;
+    width: 250px;
+    background-color: #151515;
+    border: 1px solid #252525;
+    border-radius: 4px;
+    color: #d5d5d5;
+    padding-left: 6px;
+    margin-bottom: 6px;
+}
+
+#newProjectContainer form textarea {
+
+    height: 95px;
+    max-height: 150px;
+    width: 250px;
+    max-width: 250px;
 }

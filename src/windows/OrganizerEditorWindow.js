@@ -4,6 +4,8 @@ import { BackendManager } from "../managers/BackendManager.js";
 import { ConsoleManager } from "../managers/ConsoleManager.js";
 import { EditorManager } from "../managers/EditorManager.js";
 import { EditorWindowManager } from "../managers/EditorWindowManager.js";
+import { EngineManager } from "../managers/EngineManager.js";
+import { ResourcesManager } from "../managers/ResourcesManager.js";
 import { ScenesManager } from "../managers/ScenesManager.js";
 
 export class OrganizerEditorWindow extends EditorWindow {
@@ -126,7 +128,6 @@ export class OrganizerEditorWindow extends EditorWindow {
 
     onTreeUpdated(event) {
 
-
         this.clear();
         this.buildTree();
         this.buildTreeElements();
@@ -168,18 +169,30 @@ export class OrganizerEditorWindow extends EditorWindow {
                 
                 default: type = Types.OrganizerItemType.File; break;
             }
+            
+            let data = "";
+            if(type === Types.OrganizerItemType.Scene)
+                ScenesManager.Instance.linkScene(pathPart);
+
+           if(type === Types.OrganizerItemType.Image)
+               this.getImage(pathPart);
 
             let exists = false;
-            let dir = { path: pathPart, ext: type };
+            let dir = { path: pathPart, ext: type, other: data };
             this.tree.dirs.forEach(dirItem => {
 
-                if(dirItem.path === dir.path && dirItem.ext === dir.ext)
+                if(dirItem.path === dir.path && dirItem.ext === dir.ext && dirItem.other === dir.other)
                     exists = true;
             });
 
-            if(!exists)
+            if(!exists) {
+
+                console.log('adding to tree: ' + dir.path);
                 this.tree.dirs.push({ path: pathPart, ext: type, element: null});
+            }
         }
+
+        console.log('tree bult');
     }
 
     async getImage(basePath) {
@@ -187,9 +200,9 @@ export class OrganizerEditorWindow extends EditorWindow {
         const name = EditorManager.Instance.projectName.replaceAll("/", ":");
         const path = basePath.replaceAll("/", ":");
         const url = Types.URI.FSGetFile + "/" + name + "/" + path;
-        const res = await BackendManager.Instance.getAuthenticatedFile(url); 
-        const imageURL = URL.createObjectURL(res.blob);
-        return imageURL;
+
+        console.log('new path: ' + basePath);
+        EngineManager.Instance.resourcesManager.addAsset(url, basePath);
     }
 
     buildTreeElements() {
@@ -242,7 +255,7 @@ export class OrganizerEditorWindow extends EditorWindow {
                 });
                 imageElement.addEventListener('dragstart', e => {
 
-                    e.dataTransfer.setData('text/plain', e.target.src + "|" + name);
+                    e.dataTransfer.setData('text/plain', e.target.src + "|" + name + "|" + e.target.getAttribute('path'));
                 });
                 textElement.addEventListener('dblclick', e => { console.log('changing name'); });
                
@@ -279,13 +292,16 @@ export class OrganizerEditorWindow extends EditorWindow {
             
             if(dir.path.startsWith(this.treeLayer)) {
 
+                console.log('loading: ' + dir.path);
                 if(dir.path.split('/').length === this.treeLayer.split('/').length) {
 
                     dir.element.style.display = "block";
+                    
                     if(dir.ext === Types.OrganizerItemType.Image) {
-
-                        const url = await this.getImage(dir.path);
-                        dir.element.getElementsByTagName('img')[0].src = url;
+                        
+                        console.log("image loaded");
+                        dir.element.getElementsByTagName('img')[0].setAttribute('path', dir.path);
+                        dir.element.getElementsByTagName('img')[0].src = ResourcesManager.Instance.getAssetByID(dir.path).blob;
                     }
                     continue;
                 }
@@ -293,7 +309,6 @@ export class OrganizerEditorWindow extends EditorWindow {
 
             dir.element.style.display = "none";
         }
-
     }
 
     async createScene(name) {
@@ -301,7 +316,8 @@ export class OrganizerEditorWindow extends EditorWindow {
         const body = { projectName: EditorManager.Instance.projectName, sceneName: name };
         const res = await BackendManager.Instance.postAuthenticatedRequest(body, Types.URI.CreateScene);
 
-        console.log("Scene Log: " + res.data.data);
+        if(BackendManager.Instance.isOK(res))
+            EditorManager.UpdateTreeStructure(res.data.data);
     }
 
     //Create A New Folder On Server And Update Tree

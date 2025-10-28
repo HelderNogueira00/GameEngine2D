@@ -7,8 +7,10 @@ import { ThemeManager } from "./ThemeManager.js";
 
 export class EngineUI {
 
+    static Instance = null;
     constructor(engine) {
 
+        EngineUI.Instance = this;
         this.engine = engine;
         this.elements = [];
         this.projectsManager = new ProjectsManager();
@@ -38,6 +40,7 @@ export class EngineUI {
         this.stopButton = document.getElementById("stop");
         this.framerateInput = document.getElementById("framerate");
        
+        this.loadingPanelElement = document.querySelector('#loadingPanel');
         this.editorOptionsBar = document.querySelector("#editorOptionsBar");
         this.editorLogoutButton = this.editorOptionsBar.querySelector("#logout");
 
@@ -87,5 +90,16 @@ export class EngineUI {
         this.editorElement.style.display = "none";
 
         element.style.display = "flex";
+    }
+
+    showLoading(text) {
+
+        this.loadingPanelElement.querySelector('p').textContent = text;
+        this.loadingPanelElement.style.display = "flex";
+    }
+
+    hideLoading(timer = 0) {
+
+        setTimeout(() => this.loadingPanelElement.style.display = "none", timer * 1000);
     }
 }

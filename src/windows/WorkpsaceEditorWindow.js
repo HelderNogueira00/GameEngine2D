@@ -3,6 +3,7 @@ import { EditorWindow } from "../base/EditorWindow.js";
 import { EditorWindowManager } from "../managers/EditorWindowManager.js";
 import { Types } from "../config/EngineStructs.js";
 import { ThemeManager } from "../managers/ThemeManager.js";
+import { EngineManager } from "../managers/EngineManager.js";
 
 export class WorkspaceEditorWindow extends EditorWindow {
 
@@ -136,14 +137,13 @@ export class WorkspaceEditorWindow extends EditorWindow {
             this.arrowElement.parent.top = 0;
             this.arrowElement.parent.left= 0;
             element.appendChild(this.arrowElement.parent);
-            element.style.transform = "rotateZ(" + gameObject.getComponent(Types.Component.Transform).rotation.z + "deg)";
+            //element.style.transform = "rotateZ(" + gameObject.getComponent(Types.Component.Transform).rotation.z + "deg)";
         });
     }
 
     onThemeChanged(event) {
 
         const theme = event.data;
-        console.log('on Theme changed: ' + theme);
         this.gridElement.style.backgroundColor = theme.workspaceGridBGColor;
         document.querySelector('#workspaceGrid').querySelectorAll('.cell').forEach(el => {
 
@@ -167,6 +167,7 @@ export class WorkspaceEditorWindow extends EditorWindow {
     onObjectSelected(event) {
 
         const go = EditorManager.GetGameObject(event.data);
+        go.selected = true;
         go.editorElement.style.border = "1px solid #f0bc14fa";
         go.editorElement.appendChild(this.arrowElement.parent);
         this.arrowElement.parent.style.display = "block";
@@ -174,7 +175,15 @@ export class WorkspaceEditorWindow extends EditorWindow {
 
     onObjectDeselected(event) {
 
-        EditorManager.GetGameObjects().forEach(go => go.editorElement.style.border = "none");
+        if(EngineManager.Instance.objects) {
+
+            EngineManager.Instance.objects.forEach(go => { 
+            
+                go.selected = false;
+                go.editorElement.style.border = "none";
+            });
+        }
+        
         this.arrowElement.parent.style.display = "none";
     }
 

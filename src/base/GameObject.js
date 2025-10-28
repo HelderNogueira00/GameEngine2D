@@ -14,6 +14,7 @@ export class GameObject {
         this.name = "Object";
         this.enabled = true;
         this.components = [];
+        this.selected = false;
         this.gameClass = null;
         this.editorElement = null;
         this.editorTextElement = null;

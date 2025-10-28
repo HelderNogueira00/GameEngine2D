@@ -23,6 +23,11 @@ export class LoginManager {
         return this.loginOK;
     }
 
+    async onCreateAccount(name, email, username, password) {
+
+        
+    }
+
     async logout() {
 
         const res = await BackendManager.Instance.getAuthenticatedRequest(Types.URI.LOGOUT);
@@ -30,6 +35,7 @@ export class LoginManager {
 
             localStorage.removeItem('token');
             EventsManager.Instance.broadcast({ type: EventsManager.Type.OnUserLoggedOut });
+            location.reload();
         }
     }
 

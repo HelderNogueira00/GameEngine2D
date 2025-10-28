@@ -11,14 +11,18 @@ import { BackendEvents } from "../config/BackendEvents.js";
 import { EventsManager } from "./EventsManager.js";
 import { EmptyGameObject } from "../objects/EmptyGameObject.js";
 import { ScenesManager } from "./ScenesManager.js";
+import { ResourcesManager } from "./ResourcesManager.js";
 
 export class EngineManager {
     
-    static Instance;
+    static Instance = undefined;
     constructor(...objects) {
 
+        EngineManager.Instance = this;
+        
         this.eventsManager = new EventsManager(this);
-        this.scenesManager = new ScenesManager();
+        this.scenesManager = new ScenesManager(this);
+        this.resourcesManager = new ResourcesManager(this);
         this.input = new InputManager();
         this.config = new EngineConfig();
         this.ui = new EngineUI(this);
@@ -33,15 +37,6 @@ export class EngineManager {
         this.intervalID = setInterval(() => { this.onNewFrame(); }, this.config.EngineFramerate);
     }
 
-    loadScene(config) {
-
-        this.destroyAllGameObjects();
-        if(config.objects) {
-
-            config.objects.forEach(go => this.createObject(EmptyGameObject, go));
-        }
-    }
-
     destroyAllGameObjects() {
 
         while(this.objects.length > 0) {
@@ -52,6 +47,9 @@ export class EngineManager {
                 this.destroyObject(go.id);
             }
         }
+
+        this.objects = [];
+        this.objectsCount = 0;
     }
 
     getLoopsCount() {

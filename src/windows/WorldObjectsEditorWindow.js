@@ -149,6 +149,7 @@ export class WorldObjectEditorWindow extends EditorWindow {
     onObjectSelected(event) {
 
         const go = this.getGameObjectByID(event.data);
+        go.selected = true;
         const element = go.element;
         console.log("ELement " + go.id + ": " + element);
         element.parent.style.backgroundColor = this.theme.editorColor;
@@ -174,8 +175,14 @@ export class WorldObjectEditorWindow extends EditorWindow {
 
     deselectObject() {
 
+        EditorManager.GetGameObjects().forEach(go => { 
+        
+            go.selected = false;
+        });
+
         this.gameObjects.forEach(go => { 
         
+            go.selected = false;
             go.element.parent.style.backgroundColor = this.theme.windowBodyColor;
             go.element.text.style.color = this.theme.secondaryColor;
         });

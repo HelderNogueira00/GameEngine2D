@@ -64,7 +64,7 @@ export class BackendManager {
             result.data = data;
             result.status = res.status;
         }
-        catch(err) { ConsoleManager.Error('API Error: ' + err)}
+        catch(err) { }
 
         this.apiCount++;
         return result;
@@ -96,7 +96,7 @@ export class BackendManager {
             result.data = data;
             result.status = res.status;
         }
-        catch(err) { ConsoleManager.Error('API Error: ' + err)}
+        catch(err) { }
         this.apiCount++;
         return result;
     }
@@ -122,7 +122,7 @@ export class BackendManager {
             result.data = data;
             result.status = res.status;
         }
-        catch(err) { ConsoleManager.Error('API Error: ' + err)}
+        catch(err) { }
         this.apiCount++;
         return result;
 
@@ -153,7 +153,7 @@ export class BackendManager {
             result.status = res.status;
 
         }
-        catch(err) { ConsoleManager.Error('API Error: ' + err)}
+        catch(err) { }
         this.apiCount++;
         return result;
     }
@@ -183,7 +183,7 @@ export class BackendManager {
             result.status = res.status;
 
         }
-        catch(err) { ConsoleManager.Error('API Error: ' + err)}
+        catch(err) { }
         this.apiCount++;
         return result;
     }
@@ -208,7 +208,7 @@ export class BackendManager {
             result.status = res.status;
 
         }
-        catch(err) { ConsoleManager.Error('API Error: ' + err)}
+        catch(err) { }
         this.apiCount++;
         return result;
     }

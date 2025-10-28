@@ -1,5 +1,7 @@
 import { Component } from "../base/Component.js";
 import { Types } from "../config/EngineStructs.js";
+import { EngineManager } from "../managers/EngineManager.js";
+import { ResourcesManager } from "../managers/ResourcesManager.js";
 
 export class TextureRendererComponent extends Component {
 
@@ -14,6 +16,8 @@ export class TextureRendererComponent extends Component {
         this.textureName = "";
         this.textureSource = "";
         this.offset = { x: 0, y:0 };
+
+        this.gameObject.editorElement.addEventListener('dragover', e => e.preventDefault());
     }
 
     start(){
@@ -23,6 +27,11 @@ export class TextureRendererComponent extends Component {
         this.changeOffset(0,0);
         this.changeRadius(0,0,0,0);
         this.changeSizeMode("Fit Object");
+
+        this.gameObject.editorElement.addEventListener('drop', e => {
+
+            this.onEditorDrop(e);
+        });
     }
 
     update() {
@@ -36,15 +45,28 @@ export class TextureRendererComponent extends Component {
         this.gameObject.editorElement.style.borderTopRightRadius = this.radius.topRight + "px";
         this.gameObject.editorElement.style.borderBottomLeftRadius = this.radius.bottomLeft + "px";
         this.gameObject.editorElement.style.borderBottomRightRadius = this.radius.bottomRight + "px";
-        this.gameObject.editorElement.style.backgroundImage = "url(" + this.textureSource + ")";
+
+        if(this.textureSource !== "")
+            this.gameObject.editorElement.style.backgroundImage = "url(" + ResourcesManager.Instance.getAssetByID(this.textureSource).blob + ")";
+    }
+
+    onEditorDrop(e) {
+
+        console.log('Selected: ' + this.gameObject.selected);
+        if(this.gameObject.selected) {
+            
+            e.preventDefault();
+            this.onTextureDropped(e);
+        }
     }
 
     onTextureDropped(e) {
 
-        this.textureSource = e.dataTransfer.getData('text/plain').split('|')[0];
+        this.textureSource = e.dataTransfer.getData('text/plain').split('|')[2];
         this.textureName = e.dataTransfer.getData('text/plain').split('|')[1];
-        e.target.textContent = this.textureName;
-        this.gameObject.editorElement.style.backgroundImage = "url(" + this.textureSource + ")";
+        
+        if (!e.target.classList.contains('obj'))
+            e.target.textContent = this.textureName;
     }
 
     changeOffset(x, y) {
@@ -121,6 +143,9 @@ export class TextureRendererComponent extends Component {
         this.offset = config.offset;
         this.textureName = config.textureName;
         this.textureSource = config.textureSource;
+
+        console.log("Source: "  + this.textureSource);
+        console.log("Blob Source: " + ResourcesManager.Instance.getAssetByID(this.textureSource));
     }
 
     getConfig() {

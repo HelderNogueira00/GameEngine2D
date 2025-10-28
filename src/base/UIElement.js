@@ -33,6 +33,11 @@ export class UIElement extends EventListener {
         });
     }
 
+    hideContainers() {
+
+        this.containers.forEach(cnt => cnt.parent.style.display = "none");
+    }
+
     getContainer(containerName) {
 
         return this.containers.find(container => container.name === containerName);
@@ -58,7 +63,7 @@ export class UIElement extends EventListener {
     showContainer(containerName) {
 
         const container = this.getContainer(containerName);
-        container.parent.style.display = "block";
+        container.parent.style.display = "flex";
     }
 
     disableContainer(containerName) {

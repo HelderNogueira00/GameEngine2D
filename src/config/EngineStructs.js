@@ -54,7 +54,8 @@ export class Types {
         CreateProject: 'http://engine.local:3000/projects/create',
         LoadProject: 'http://engine.local:3000/projects/load',
         CreateScene: 'http://engine.local:3000/scenes/create',
-        LoadScene: 'http://engine.local:3000/scenes/load'
+        SaveScene: 'http://engine.local:3000/scenes/save',
+        FetchScene: 'http://engine.local:3000/scenes/fetch'
     });
 }
 

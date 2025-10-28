@@ -1,5 +1,6 @@
 import { UIElement } from "../base/UIElement.js";
 import { EngineConfig } from "../config/EngineConfig.js";
+import { EngineUI } from "../managers/EngineUI.js";
 import { LoginManager } from "../managers/LoginManager.js";
 import { ProjectsManager } from "../managers/ProjectsManager.js";
 
@@ -17,17 +18,32 @@ export class LoginUI extends UIElement {
         this.addContainer("#loginContainer", "login");
         this.addContainer('#newProjectContainer', "newProject");
         this.addContainer('#projectsListContainer', "projects");
+        this.addContainer('#createAccountContainer', "newAccount");
+        this.addContainer('#forgotPasswordContainer', "passwordRec");
 
         //Linking Elements
         this.addElement("login", "#usernameInput", "username");
         this.addElement("login", "#passwordInput", "password");
         this.addElement("login", "#login", "button");
+        this.addElement("login", "#backCreateAccount", "createAccount");
         this.addElement("projects", "#create", "create");
         this.addElement("projects", "#logout", "logout");
         this.addElement("newProject", "#nameInput", "name");
         this.addElement("newProject", "#descInput", "desc");
         this.addElement('newProject', "#create", "create");
         this.addElement("newProject", "#list", "list");
+        this.addElement("newAccount", "#nameInput", "name");
+        this.addElement("newAccount", "#usernameInput", "username");
+        this.addElement("newAccount", "#passwordInput", "password");
+        this.addElement("newAccount", "#emailInput", "email");
+        this.addElement("newAccount", "#CPasswordInput", "cpassword");
+        this.addElement("newAccount", "#createAccount", "createAccount");
+        this.addElement("newAccount", "#backLogin", "login");
+        this.addElement("passwordRec", "#usernameInput", "username");
+        this.addElement("passwordRec", "#emailInput", "email");
+        this.addElement("passwordRec", "#recovery", "recovery");
+        this.addElement("passwordRec", "#backLogin", "login");
+        this.addElement("passwordRec", "#backCreateAccount", "createAccount");
     }
 
     createListeners() {
@@ -37,12 +53,43 @@ export class LoginUI extends UIElement {
         this.getElement("newProject", "list").addEventListener('click', e => this.onListClick(e));
         this.getElement("newProject", "create").addEventListener('click', e => this.onCreateClick(e));
         this.getElement("login", "button").addEventListener('click', e => this.onLoginClick(e));
+        this.getElement("newAccount", "createAccount").addEventListener('click', e => this.onCreateAccountClick(e));
+        this.getElement("login", "createAccount").addEventListener('click', e => this.onCreateAccountBackClick(e));
+        this.getElement("newAccount", "login").addEventListener('click', e => this.onLoginBackClick(e));
     }
 
     initialize() {
 
-        this.hideContainer("projects");
-        this.hideContainer("newProject");
+        this.hideContainers();
+        this.showContainer("login");
+    }
+
+    onLoginBackClick(e) {
+
+        e.preventDefault();
+        this.hideContainers();
+        this.showContainer("login");
+    }
+
+    onCreateAccountBackClick(e) {
+
+        e.preventDefault();
+        this.hideContainers();
+        this.showContainer("newAccount");
+    }
+
+    onCreateAccountClick(e) {
+
+        e.preventDefault();
+        this.disableContainer("newAccount");
+
+        const name = this.getValue("newAccount", "name");
+        const email = this.getValue("newAccount", "email");
+        const username = this.getValue("newAccount", "username");
+        const password = this.getValue("newAccount", "password");
+        const cPassword = this.getValue("newAccount", "cPassword");
+
+        LoginManager.Instance.onCreateAccount(name, email, username, password);
     }
 
     onLogoutClick(e) {
@@ -189,6 +236,7 @@ export class LoginUI extends UIElement {
 
         this.hideContainer("projects");
         this.engineUI.engine.changeState(EngineConfig.EngineState.Editing);
+        EngineUI.Instance.hideLoading(0.3);
     }
 
     onProjectDeleted() { ProjectsManager.Instance.fetchProjects(); }

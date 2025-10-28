@@ -1,4 +1,9 @@
 <div id="editorElement">
+    <div id="loadingPanel">
+        <div class="body">
+            <p>Loading, please wait a few seconds ...</p>
+        </div>
+    </div>
     <ul class="context-menu" id="windowContextMenu">
 
     </ul>
@@ -16,6 +21,7 @@
             <li><a id="saveScene" href="#">SAVE</a></li>
             <li><a href="#">BACKUP</a></li>
             <li><a id="logout" href="#">LOGOUT</a></li>
+            <p id="currentScene">No Scene Loaded</p>
         </ul>
     </div>
 
@@ -24,6 +30,7 @@
         <button id="play">PLAY</button>
         <button id="codeOpen">Open Code Editor</button>
         <button id="codeClose">Close Code Editor</button>
+    
     </div>
 
 

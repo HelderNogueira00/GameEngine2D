@@ -1,6 +1,7 @@
 import { Types } from "../config/EngineStructs.js";
 import { EventListener } from "../config/EventListener.js";
 import { BackendManager } from "./BackendManager.js";
+import { EngineUI } from "./EngineUI.js";
 import { EventsManager } from "./EventsManager.js";
 
 export class ProjectsManager {
@@ -44,7 +45,7 @@ export class ProjectsManager {
 
     async loadProject(projectID) {
 
-
+        EngineUI.Instance.showLoading("Loading Project, Please Wait...");
         const body = { projectID: projectID };
         const res = await BackendManager.Instance.postAuthenticatedRequest(body, Types.URI.LoadProject);
 
