@@ -187,7 +187,6 @@ export class OrganizerEditorWindow extends EditorWindow {
 
             if(!exists) {
 
-                console.log('adding to tree: ' + dir.path);
                 this.tree.dirs.push({ path: pathPart, ext: type, element: null});
             }
         }
@@ -201,7 +200,6 @@ export class OrganizerEditorWindow extends EditorWindow {
         const path = basePath.replaceAll("/", ":");
         const url = Types.URI.FSGetFile + "/" + name + "/" + path;
 
-        console.log('new path: ' + basePath);
         EngineManager.Instance.resourcesManager.addAsset(url, basePath);
     }
 
@@ -292,7 +290,6 @@ export class OrganizerEditorWindow extends EditorWindow {
             
             if(dir.path.startsWith(this.treeLayer)) {
 
-                console.log('loading: ' + dir.path);
                 if(dir.path.split('/').length === this.treeLayer.split('/').length) {
 
                     dir.element.style.display = "block";

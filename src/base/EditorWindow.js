@@ -140,6 +140,11 @@ export class EditorWindow {
         this.contentElement = this.element.querySelector('.content');
     }
 
+    disableContextMenu() {
+
+        this.element.addEventListener('contextmenu', e => e.preventDefault());
+    }
+
     getWindowID() {
 
         console.log(this.element.id);

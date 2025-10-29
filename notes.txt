@@ -5,3 +5,5 @@
 -> Preloading assets on beginning;
 -> Drag IMage To Object Itself
 -> Create Account System;
+-> Camera GameObject
+-> Grid Zooming

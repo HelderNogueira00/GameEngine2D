@@ -7,7 +7,7 @@ export class EngineConfig {
         Playing: 2
     });
 
-    PixelUnit = 41;
+    static PixelUnit = 41;
     GameFramerate = 10000;
     EditorFramerate = 100;
     EngineFramerate = 1000;

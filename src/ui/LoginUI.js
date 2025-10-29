@@ -25,6 +25,7 @@ export class LoginUI extends UIElement {
         this.addElement("login", "#usernameInput", "username");
         this.addElement("login", "#passwordInput", "password");
         this.addElement("login", "#login", "button");
+        this.addElement("login", "#forgotPassword", "forgot");
         this.addElement("login", "#backCreateAccount", "createAccount");
         this.addElement("projects", "#create", "create");
         this.addElement("projects", "#logout", "logout");
@@ -56,12 +57,33 @@ export class LoginUI extends UIElement {
         this.getElement("newAccount", "createAccount").addEventListener('click', e => this.onCreateAccountClick(e));
         this.getElement("login", "createAccount").addEventListener('click', e => this.onCreateAccountBackClick(e));
         this.getElement("newAccount", "login").addEventListener('click', e => this.onLoginBackClick(e));
+        this.getElement("passwordRec", "createAccount").addEventListener('click', e => this.onCreateAccountBackClick(e));
+        this.getElement("passwordRec", "login").addEventListener('click', e => this.onLoginBackClick(e));
+        this.getElement("passwordRec", "recovery").addEventListener('click', e => this.onAccountRecoveryClick(e));
+        this.getElement("login", "forgot").addEventListener('click', e => this.onForgotPasswordClick(e));
     }
 
     initialize() {
 
         this.hideContainers();
         this.showContainer("login");
+    }
+
+    onForgotPasswordClick(e) {
+
+        e.preventDefault();
+        this.hideContainers();
+        this.showContainer("passwordRec");
+    }
+
+    onAccountRecoveryClick(e) {
+
+        e.preventDefault();
+        this.disableContainer("passwordRec");
+
+        const username = this.getValue("passwordRec", "username");
+        const email = this.getValue("passwordRec", "email");
+        LoginManager.Instance.onAccountRecovery(username, email);
     }
 
     onLoginBackClick(e) {

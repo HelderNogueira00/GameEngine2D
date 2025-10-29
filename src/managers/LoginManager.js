@@ -25,6 +25,10 @@ export class LoginManager {
 
     async onCreateAccount(name, email, username, password) {
 
+
+    }
+
+    async onAccountRecovery(username, email) {
         
     }
 

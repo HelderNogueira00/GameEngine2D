@@ -58,7 +58,7 @@
                     <span>Workspace</span>
                 </div>
                 <div class="window-body">
-                     <div class="content horizontal">
+                     <div id="gridBG" class="content horizontal">
                         <div class="grid" id="workspaceGrid">
                         </div>
                         <div id="gridObjects"></div>

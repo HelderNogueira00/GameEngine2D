@@ -4,6 +4,7 @@ import { EditorWindowManager } from "../managers/EditorWindowManager.js";
 import { Types } from "../config/EngineStructs.js";
 import { ThemeManager } from "../managers/ThemeManager.js";
 import { EngineManager } from "../managers/EngineManager.js";
+import { EngineConfig } from "../config/EngineConfig.js";
 
 export class WorkspaceEditorWindow extends EditorWindow {
 
@@ -12,6 +13,9 @@ export class WorkspaceEditorWindow extends EditorWindow {
         super(EditorWindow.Type.Workspace);
 
         this.isGridDragging = false;
+        this.gridOffset = { x:0, y: 0};
+        this.gridScale = 1;
+
         this.offset = { x: 0, y:0 }
         this.lastMousePos = { x: 0, y:0 }
 
@@ -23,6 +27,7 @@ export class WorkspaceEditorWindow extends EditorWindow {
         this.objects = [];
         this.createGridEditor();
         this.createListeners();
+        this.disableContextMenu();
     }
 
     onClean = () => {
@@ -67,63 +72,99 @@ export class WorkspaceEditorWindow extends EditorWindow {
 
         this.gridElement = document.querySelector('#workspaceGrid');
         this.gridObjects = document.querySelector('#gridObjects');
-
         this.gridElement.style.position = "relative";
 
-        const rows = 50;
-        const columns = 50;
-
-        this.gridElement.style.gridTemplateColumns = "repeat(" + columns + ", 40px)";
-        this.gridElement.style.gridTemplateRows = "repeat(" + rows + ", 40px)";
+        const rows = 20;
+        const columns = 20;
+        const pixelUnit = EngineConfig.PixelUnit;
+        //this.gridElement.style.gridTemplateColumns = "repeat(" + rows + ", 40px)";
+        //this.gridElement.style.gridTemplateRows = "repeat(" + columns + ", 40px)";
 
         for(let x = 0; x < rows; x++) {
             for(let y = 0; y < columns; y++) {
 
+                console.log(x + ":" + pixelUnit);
                 const cellElement = document.createElement('div');
                 cellElement.classList.add('cell');
                 cellElement.setAttribute("y", x);
                 cellElement.setAttribute("x", y);
+                cellElement.style.position = "absolute";
+                cellElement.style.width = pixelUnit-1 + "px";
+                cellElement.style.height = pixelUnit-1 + "px";
+                cellElement.style.top = x * pixelUnit-1 + "px";
+                cellElement.style.left = y * pixelUnit-1 + "px";
                 this.gridElement.appendChild(cellElement);
             }
         }
+        
 
         this.onThemeChanged({data: ThemeManager.DarkTheme});
     }
 
+    updateGrid() {
+
+
+    }
+
     createListeners() {
 
-        this.element.addEventListener('mousedown', e => {
+        this.gridElement.addEventListener('mousedown', e => {
 
-            if (e.button === 1) { // Middle mouse
-                
+            if(e.button === 2){
+
+                console.log('start drag');
                 this.isGridDragging = true;
-                this.lastMousePos = { x: e.clientX, y: e.clientY };
-                e.preventDefault();
+                this.gridOffset.x = e.clientX - this.gridElement.offsetLeft;
+                this.gridOffset.y = e.clientY - this.gridElement.offsetTop;
             }
         });
 
-        this.element.addEventListener('mouseup', e => {
+        document.addEventListener('mousemove', e => {
 
-            if(e.button === 1)
-                this.isGridDragging = false;
+            if(this.isGridDragging) {
+
+                this.updateGrid();
+                this.gridElement.style.left = (e.clientX - this.gridOffset.x) + "px";
+                this.gridElement.style.top = (e.clientY - this.gridOffset.y) + "px";
+            }
         });
 
-        this.element.addEventListener('mousemove', e => {
+        document.addEventListener('mouseup', e => {
 
-             if (!this.isGridDragging) return;
+            if(e.button === 2) {
 
-            const dx = e.deltaX - this.lastMousePos.x;
-            const dy = e.deltaY - this.lastMousePos.y;
+                console.log('stopped dragging');
+                this.isGridDragging = false;
+            }
+        });
+        
+        this.gridElement.addEventListener('wheel', e => {
 
-            this.offset.x += dx;
-            this.offset.y += dy;
+            e.preventDefault();
+            this.updateGrid();
 
-            this.gridElement.style.transform = `translate(${this.offset.x}px, ${this.offset.y}px)`;
-            this.lastMousePos = { x: e.clientX, y: e.clientY };
+            const rect = this.gridElement.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+            const originX = (offsetX / rect.width) * 100;
+            const originY = (offsetY / rect.height) * 100;
+            this.gridElement.style.transformOrigin = `${originX}% ${originY}%`;
+
+            if(e.deltaY < 0)
+                this.gridScale *= 1.1;
+            else 
+                this.gridScale /= 1.1;
+
+           // this.gridScale = Math.min(Math.max(this.gridScale, 0.5), 5);
+            this.gridElement.style.transform = `scale(${this.gridScale})`;
         });
     }
 
     onRefresh() {
+
+        if(this.gridElement) 
+            this.gridElement.style.cursor = (this.isGridDragging) ? "hand" : "auto";
+
         this.drawOnGrid();
     }
 
@@ -154,9 +195,9 @@ export class WorkspaceEditorWindow extends EditorWindow {
 
     onMouseUp(event) {
 
-        this.isObjectDragging = false;
-        this.isArrowMoving.x = false;
-        this.isArrowMoving.y = false;
+       //this.isObjectDragging = false;
+      //  this.isArrowMoving.x = false;
+       // this.isArrowMoving.y = false;
     }
 
     onObjectDestroyed(event) {
