@@ -25,7 +25,18 @@ export class LoginManager {
 
     async onCreateAccount(name, email, username, password) {
 
+        const body = {
 
+            name: `${name}`,
+            email: `${email}`,
+            username: `${username}`,
+            password: `${password}`
+        };
+
+        const res = await BackendManager.Instance.postRequest(body, Types.URI.CreateProject);
+        const token = res.data.token;
+        console.log(res);
+        return res;
     }
 
     async onAccountRecovery(username, email) {

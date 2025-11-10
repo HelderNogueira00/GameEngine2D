@@ -74,8 +74,8 @@ export class WorkspaceEditorWindow extends EditorWindow {
         this.gridObjects = document.querySelector('#gridObjects');
         this.gridElement.style.position = "relative";
 
-        const rows = 20;
-        const columns = 20;
+        const rows = 80;
+        const columns = 80;
         const pixelUnit = EngineConfig.PixelUnit;
         //this.gridElement.style.gridTemplateColumns = "repeat(" + rows + ", 40px)";
         //this.gridElement.style.gridTemplateRows = "repeat(" + columns + ", 40px)";
@@ -94,10 +94,11 @@ export class WorkspaceEditorWindow extends EditorWindow {
                 cellElement.style.top = x * pixelUnit-1 + "px";
                 cellElement.style.left = y * pixelUnit-1 + "px";
                 this.gridElement.appendChild(cellElement);
-            }
+            }pixelUnit
         }
-        
 
+        this.gridElement.style.top = -(columns * (pixelUnit - 1)/ 2) + "px";
+        this.gridElement.style.left = -(rows * (pixelUnit - 1) / 2) + "px";
         this.onThemeChanged({data: ThemeManager.DarkTheme});
     }
 
