@@ -33,7 +33,7 @@ export class LoginManager {
             password: `${password}`
         };
 
-        const res = await BackendManager.Instance.postRequest(body, Types.URI.CreateProject);
+        const res = await BackendManager.Instance.postRequest(body, Types.URI.CreateAccount);
         const token = res.data.token;
         console.log(res);
         return res;

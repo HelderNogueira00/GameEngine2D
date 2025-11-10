@@ -109,8 +109,15 @@ export class LoginUI extends UIElement {
         const email = this.getValue("newAccount", "email");
         const username = this.getValue("newAccount", "username");
         const password = this.getValue("newAccount", "password");
-        const cPassword = this.getValue("newAccount", "cPassword");
+        const cPassword = this.getValue("newAccount", "cpassword");
 
+        //Triage Errors
+        if (cPassword !== password) {
+
+            return;
+        }
+
+        console.log("sending req");
         LoginManager.Instance.onCreateAccount(name, email, username, password);
     }
 
